@@ -1,10 +1,4 @@
-export interface IGithubLoginResponse extends GithubUser {}
-
-export interface IGithubDoneResponse {
-  user: IGithubLoginResponse;
-}
-
-export interface GithubUser {
+export interface IGithubUser {
   id: string;
   nodeId: string;
   displayName: string;
