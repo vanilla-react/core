@@ -1,7 +1,7 @@
 import Axios, { AxiosInstance } from 'axios';
 import { Configuration } from '../configuration';
 
-export class AxiosFactory {
+export class AxiosWrapper {
   private readonly _axios: AxiosInstance;
 
   get axios() {
@@ -10,7 +10,7 @@ export class AxiosFactory {
 
   constructor(private readonly _configuration: Configuration) {
     this._axios = Axios.create({
-      baseURL: 'http://localhost:5000',
+      baseURL: _configuration.BASE_URL,
     });
   }
 
