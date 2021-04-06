@@ -3,7 +3,7 @@ import 'dotenv/config';
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-github2';
-import { IGithubDoneResponse, IGithubLoginResponse } from 'src/types';
+import { IGithubUser } from 'src/types';
 
 @Injectable()
 export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
@@ -16,6 +16,7 @@ export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
     });
   }
 
+<<<<<<< HEAD
   public async validate(
     accessToken: string,
     _: any,
@@ -26,5 +27,9 @@ export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
     // done(null, {
     //   user,
     // });
+=======
+  public async validate(_: string, __: any, user: IGithubUser) {
+    return user;
+>>>>>>> 4b62e2d91b8fa75adbf2295482d8d667ee514f98
   }
 }

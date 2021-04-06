@@ -1,13 +1,13 @@
-import { IGithubDoneResponse } from 'src/types';
+import { IGithubUser } from 'src/types';
 
 export class CreateUserDto {
   name: string;
   email: string;
 
-  static create({ user }: IGithubDoneResponse) {
+  static create(user: IGithubUser) {
     const _user = new CreateUserDto();
 
-    _user.name = user.displayName;
+    _user.name = user.username;
     _user.email = user.emails[0].value;
 
     return _user;
