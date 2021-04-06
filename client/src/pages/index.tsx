@@ -6,6 +6,7 @@ export default function Home() {
       <Head>
         <title>Vanilla React Beta</title>
       </Head>
+      hi
     </div>
   );
 }
