@@ -10,12 +10,8 @@ import { AuthGuard } from '@nestjs/passport';
 import { Response } from 'express';
 import { JwtAuthGuard } from './guards/jwt.guard';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-<<<<<<< HEAD
-import { IGithubDoneResponse } from 'src/types';
-=======
 import { User } from './decorators/user.decorator';
 import { IGithubUser } from '../types';
->>>>>>> 4b62e2d91b8fa75adbf2295482d8d667ee514f98
 
 @ApiTags('auth')
 @Controller('auth')
