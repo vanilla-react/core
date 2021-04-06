@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   NotFoundException,
+  Req,
   Res,
   UseGuards,
 } from '@nestjs/common';
@@ -32,9 +33,11 @@ export class AuthController {
   @Get('redirect')
   @UseGuards(AuthGuard('github'))
   public async githubAuthRedirect(
-    @User() user: IGithubUser,
+    @Req() request: Request & { user: IGithubUser },
     @Res() res: Response,
   ) {
+    const { user } = request;
+
     if (!user) {
       throw new NotFoundException('No user found');
     }
