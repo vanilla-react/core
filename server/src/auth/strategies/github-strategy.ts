@@ -22,7 +22,7 @@ export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
     user: IGithubLoginResponse,
     done: (error: Error | null, data: IGithubDoneResponse) => void,
   ) {
-    return { user };
+    return user;
     // done(null, {
     //   user,
     // });
