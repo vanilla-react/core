@@ -11,17 +11,22 @@ import { AuthGuard } from '@nestjs/passport';
 import { Request, Response } from 'express';
 import { JwtAuthGuard } from './guards/jwt.guard';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { UserService } from 'src/user/user.service';
 
 @ApiTags('auth')
 @Controller('auth')
 @ApiBearerAuth()
 export class AuthController {
-  public constructor(private readonly _authService: AuthService) {}
+  public constructor(
+    private readonly _authService: AuthService,
+    private readonly _userService: UserService,
+  ) {}
 
   @Get('/me')
   @UseGuards(JwtAuthGuard)
   public async me(@Req() req: Request) {
-    return req.user;
+    // @ts-expect-error wrong types, fixed it diff branch
+    return this._userService.getOneById(req.user.id);
   }
 
   @Get()

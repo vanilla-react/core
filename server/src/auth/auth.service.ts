@@ -22,9 +22,9 @@ export class AuthService {
     return this.createJwt(createdUser);
   }
 
-  private createJwt({ id, name, email }: User) {
+  private createJwt({ id }: User) {
     return {
-      accessToken: this._jwtService.sign({ id, name, email }),
+      accessToken: this._jwtService.sign({ id }),
     };
   }
 }
