@@ -1,8 +1,8 @@
 import { User } from '.prisma/client';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { IGithubUser } from 'src/types';
 
-import { IGithubDoneResponse } from 'src/types';
 import { CreateUserDto } from '../user/dtos/create-user.dto';
 import { UserService } from '../user/user.service';
 
@@ -13,8 +13,7 @@ export class AuthService {
     private readonly _jwtService: JwtService,
   ) {}
 
-  // TODO: Remove access token from github response
-  public async githubLogin(user: IGithubDoneResponse) {
+  public async githubLogin(user: IGithubUser) {
     const createdUser = await this._userService.create(
       CreateUserDto.create(user),
     );
