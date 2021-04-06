@@ -1,4 +1,3 @@
-import { Configuration } from '../configuration';
 import { BaseApi } from './base.api';
 
 export class AuthApi extends BaseApi {

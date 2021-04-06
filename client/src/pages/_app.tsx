@@ -1,7 +1,8 @@
 import { CSSReset, theme, ThemeProvider } from '@chakra-ui/react';
+import { AppProps } from 'next/dist/next-server/lib/router/router';
 import { AppProvider } from '../contexts/app.context';
 
-function MyApp({ Component, pageProps }) {
+const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <ThemeProvider theme={theme}>
       <CSSReset />
@@ -10,6 +11,6 @@ function MyApp({ Component, pageProps }) {
       </AppProvider>
     </ThemeProvider>
   );
-}
+};
 
 export default MyApp;

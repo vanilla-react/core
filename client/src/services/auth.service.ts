@@ -2,6 +2,7 @@ import { makeObservable, observable } from 'mobx';
 import { AuthApi } from '../apis';
 
 export class AuthService {
+  // TODO: ADD USER
   @observable
   public data: any = [];
 
