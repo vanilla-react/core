@@ -1,6 +1,8 @@
-import { CSSReset, theme, ThemeProvider } from '@chakra-ui/react';
+import { CSSReset, ThemeProvider, theme } from '@chakra-ui/react';
 import { AppProps } from 'next/dist/next-server/lib/router/router';
 import { AppProvider } from '../contexts/app.context';
+
+import '../global.css';
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
