@@ -7,7 +7,7 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=leaguedex
+      - POSTGRES_DB=vanilla-react
     ports:
       - 5432:5432
 
