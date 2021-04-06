@@ -1,7 +1,8 @@
-import { Box, Flex, Heading } from '@chakra-ui/layout';
+import { Flex } from '@chakra-ui/layout';
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { Auth } from './components/auth.component';
+import { Logo } from './components/logo.component';
 
 export const Header = observer(() => {
   return (
@@ -14,9 +15,7 @@ export const Header = observer(() => {
       bgColor="white"
       borderBottom="1px solid #eee"
     >
-      <Box>
-        <Heading color="purple.500">VR</Heading>
-      </Box>
+      <Logo />
       <Auth />
     </Flex>
   );
