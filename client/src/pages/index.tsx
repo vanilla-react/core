@@ -1,12 +1,13 @@
 import Head from 'next/head';
 
-export default function Home() {
+const Home = () => {
   return (
     <div>
       <Head>
         <title>Vanilla React Beta</title>
       </Head>
-      hi
     </div>
   );
-}
+};
+
+export default Home;

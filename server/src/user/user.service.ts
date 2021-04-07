@@ -6,6 +6,19 @@ import { CreateUserDto } from './dtos/create-user.dto';
 export class UserService {
   constructor(private readonly _prisma: PrismaService) {}
 
+  public async getOneById(id: number) {
+    return this._prisma.user.findFirst({
+      where: {
+        id,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+      },
+    });
+  }
+
   public async create(userData: CreateUserDto) {
     return this._prisma.user.upsert({
       where: {

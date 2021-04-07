@@ -18,12 +18,12 @@ export class AuthService {
       CreateUserDto.create(user),
     );
 
-    return this.createJwt(createdUser.id);
+    return this.createJwt(createdUser);
   }
 
-  private createJwt(userId: User['id']) {
+  private createJwt({ id }: User) {
     return {
-      accessToken: this._jwtService.sign({ id: userId }),
+      accessToken: this._jwtService.sign({ id }),
     };
   }
 }
