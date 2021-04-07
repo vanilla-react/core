@@ -1,4 +1,3 @@
-//@ts-expect-error Class-validator doesn't offer types
 import { IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 

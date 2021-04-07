@@ -1,27 +1,14 @@
-import { Snippet } from '.prisma/client';
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma.service';
 import { CreateSnippetDto } from './dto/create-snippet.dto';
 import { UpdateSnippetDto } from './dto/update-snippet.dto';
+import { SnippetRepository } from './snippet.repository';
 
 @Injectable()
 export class SnippetService {
-  constructor(private readonly _prismaService: PrismaService) {}
+  constructor(private readonly _snippetRepo: SnippetRepository) {}
 
   create(userId: number, createSnippetDto: CreateSnippetDto) {
-    return this._prismaService.snippet.create({
-      data: {
-        Author: {
-          connect: {
-            id: userId,
-          },
-        },
-        slug: 'hi',
-        title: createSnippetDto.title,
-        JSContent: createSnippetDto.JSContent,
-        ReactContent: createSnippetDto.ReactContent,
-      },
-    });
+    return this._snippetRepo.create(userId, createSnippetDto);
   }
 
   findAll() {
