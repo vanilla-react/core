@@ -1,4 +1,3 @@
-import React, { useMemo } from 'react';
 import { createContext } from 'react';
 import { AuthApi } from '../apis';
 import { Configuration } from '../configuration';
@@ -9,33 +8,21 @@ interface IAppProvidersProps {
   authService: AuthService;
   config: Configuration;
   axios: AxiosInstance;
-  user: any;
-  setUser: any;
 }
+
+const config = new Configuration();
+
+const axios = Axios.create({
+  baseURL: config.BASE_URL,
+});
+
+const authApi = new AuthApi(axios);
+const authService = new AuthService(authApi, axios, config);
 
 export const AppContext = createContext<IAppProvidersProps>(undefined!);
 
-export const AppProvider: React.FC = ({ children }) => {
-  const [user, setUser] = React.useState<any>(null);
-  const configuration = new Configuration();
-
-  const axios = Axios.create({
-    baseURL: configuration.BASE_URL,
-  });
-
-  const authApi = new AuthApi(axios);
-  const authService = new AuthService(authApi, axios, configuration);
-
-  const value = useMemo(
-    () => ({
-      authService,
-      config: configuration,
-      axios,
-      user,
-      setUser,
-    }),
-    [authService, configuration, axios, user, setUser],
-  );
-
-  return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
-};
+export const AppProvider: React.FC = ({ children }) => (
+  <AppContext.Provider value={{ config, axios, authService }}>
+    {children}
+  </AppContext.Provider>
+);
