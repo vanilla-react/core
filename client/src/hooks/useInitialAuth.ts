@@ -3,7 +3,7 @@ import { useProviders } from './useProviders';
 
 export const useInitialAuth = (accessToken: string) => {
   const [loading, setLoading] = useState(true);
-  const { authService, config } = useProviders();
+  const { authService, config, setUser } = useProviders();
 
   useEffect(() => {
     if (!accessToken && !config.accessToken) return setLoading(false);

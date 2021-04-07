@@ -7,14 +7,14 @@ import { BaseLayout } from '../layouts';
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
-    <ThemeProvider theme={theme}>
-      <CSSReset />
-      <AppProvider>
+    <AppProvider>
+      <ThemeProvider theme={theme}>
+        <CSSReset />
         <BaseLayout {...pageProps}>
           <Component {...pageProps} />
         </BaseLayout>
-      </AppProvider>
-    </ThemeProvider>
+      </ThemeProvider>
+    </AppProvider>
   );
 };
 

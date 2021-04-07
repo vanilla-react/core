@@ -9,11 +9,14 @@ interface IAppProvidersProps {
   authService: AuthService;
   config: Configuration;
   axios: AxiosInstance;
+  user: any;
+  setUser: any;
 }
 
 export const AppContext = createContext<IAppProvidersProps>(undefined!);
 
 export const AppProvider: React.FC = ({ children }) => {
+  const [user, setUser] = React.useState<any>(null);
   const configuration = new Configuration();
 
   const axios = Axios.create({
@@ -28,8 +31,10 @@ export const AppProvider: React.FC = ({ children }) => {
       authService,
       config: configuration,
       axios,
+      user,
+      setUser,
     }),
-    [authService, configuration, axios],
+    [authService, configuration, axios, user, setUser],
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

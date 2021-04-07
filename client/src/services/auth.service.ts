@@ -25,6 +25,7 @@ export class AuthService {
   public async getMe() {
     const { data } = await this._authApi.me();
     this.setUser(data);
+    return data;
   }
 
   @action
@@ -38,6 +39,7 @@ export class AuthService {
     this.user = data;
   }
 
+  @action
   public setupInterceptors() {
     this._axios.interceptors.request.use(async (config) => {
       const token = localStorage.getItem(this._config.accessTokenKey);
@@ -50,6 +52,7 @@ export class AuthService {
     });
   }
 
+  @action
   public addAuthorizationHeader(accessToken: string) {
     this._axios.defaults.headers = {
       ...this._axios.defaults.headers,
