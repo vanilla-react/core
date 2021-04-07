@@ -3,7 +3,7 @@ import { useProviders } from './useProviders';
 
 export const useInitialAuth = (accessToken: string) => {
   const [loading, setLoading] = useState(true);
-  const { authService, axios, config } = useProviders();
+  const { authService, config } = useProviders();
 
   useEffect(() => {
     if (!accessToken && !config.accessToken) return setLoading(false);
@@ -12,8 +12,8 @@ export const useInitialAuth = (accessToken: string) => {
       localStorage.setItem(config.accessTokenKey, accessToken);
     }
 
-    axios.setupInterceptors();
-    axios.addAuthorizationHeader(config.accessToken!);
+    authService.setupInterceptors();
+    authService.addAuthorizationHeader(config.accessToken!);
 
     authService.getMe().finally(() => setLoading(false));
   }, [accessToken]);
