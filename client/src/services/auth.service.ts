@@ -24,8 +24,18 @@ export class AuthService {
   @action
   public async getMe() {
     const { data } = await this._authApi.me();
+    this.setUser(data);
+  }
+
+  @action
+  public logout() {
+    this.setUser(null);
+    localStorage.removeItem(this._config.accessTokenKey);
+  }
+
+  @action
+  private setUser(data: IUser | null) {
     this.user = data;
-    return data;
   }
 
   public setupInterceptors() {
