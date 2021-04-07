@@ -11,34 +11,45 @@ generator client {
 }
 
 model User {
-  id       Int        @id @default(autoincrement())
-  name     String
-  email    String     @unique
-  Snippets Snippet[]
-  Feedback Feedback[]
-  Kudos    Kudo[]
+  id        Int        @id @default(autoincrement())
+  name      String
+  email     String     @unique
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  Snippets  Snippet[]
+  Feedback  Feedback[]
+  Kudos     Kudo[]
 }
 
 model Snippet {
   id     Int           @id @default(autoincrement())
-  slug   String        @db.VarChar(255)
+  slug   String        @unique @db.VarChar(255)
   title  String        @db.VarChar(255)
   status SnippetStatus @default(PENDING)
 
-  Author   User       @relation(fields: [userId], references: [id])
-  userId   Int
-  Feedback Feedback[]
-  Kudos    Kudo[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  JSContent    Json
+  ReactContent Json
+  Author       User       @relation(fields: [userId], references: [id])
+  userId       Int
+  Feedback     Feedback[]
+  Kudos        Kudo[]
 
   @@unique([title, userId])
+  @@index([slug])
 }
 
 model Feedback {
-  id        Int     @id @default(autoincrement())
-  content   String  @db.Text
-  Snippet   Snippet @relation(fields: [snippetId], references: [id])
+  id        Int      @id @default(autoincrement())
+  content   String   @db.Text
+  Snippet   Snippet  @relation(fields: [snippetId], references: [id])
   snippetId Int
-  Author    User    @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Author    User     @relation(fields: [userId], references: [id])
   userId    Int
 
   @@unique([userId, content])
@@ -48,7 +59,9 @@ model Kudo {
   Author User @relation(fields: [userId], references: [id])
   userId Int
 
-  Snippet   Snippet @relation(fields: [snippetId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Snippet   Snippet  @relation(fields: [snippetId], references: [id])
   snippetId Int
 
   @@id([userId, snippetId])
