@@ -7,7 +7,6 @@ import { Dropdown } from './dropdown.component';
 
 export const Auth = observer(() => {
   const { authService } = useProviders();
-  console.log(authService.user?.name);
 
   if (authService.isAuthenticated) {
     return (
