@@ -21,7 +21,6 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 export default MyApp;
 
 MyApp.getInitialProps = async (ctx: any) => {
-  console.log(ctx);
   return {
     accessToken: ctx.query?.accessToken,
   };
