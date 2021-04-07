@@ -1,12 +1,13 @@
 import { useProviders } from '../../../hooks/useProviders';
 
 import { Box, Flex, Text } from '@chakra-ui/layout';
-import { Avatar } from './avatar.component';
 import { GithubLogin } from './github-login.component';
 import { observer } from 'mobx-react-lite';
+import { Dropdown } from './dropdown.component';
 
 export const Auth = observer(() => {
   const { authService } = useProviders();
+  console.log(authService.user?.name);
 
   if (authService.isAuthenticated) {
     return (
@@ -15,7 +16,7 @@ export const Auth = observer(() => {
           <Text mr={4} fontWeight="bold" fontSize="1.1rem">
             {authService.user!.name}
           </Text>
-          <Avatar name={authService.user!.name} />
+          <Dropdown />
         </Flex>
       </Box>
     );
