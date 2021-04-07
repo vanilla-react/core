@@ -1,7 +1,9 @@
+import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { useProviders } from './useProviders';
 
 export const useInitialAuth = (accessToken: string) => {
+  const router = useRouter();
   const [loading, setLoading] = useState(true);
   const { authService, config } = useProviders();
 
@@ -14,6 +16,10 @@ export const useInitialAuth = (accessToken: string) => {
 
     authService.setupInterceptors();
     authService.addAuthorizationHeader(config.accessToken!);
+
+    router.replace({
+      search: '',
+    });
 
     authService.getMe().finally(() => setLoading(false));
   }, [accessToken]);
