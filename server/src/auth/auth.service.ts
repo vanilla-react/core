@@ -21,7 +21,7 @@ export class AuthService {
     return this.createJwt(createdUser);
   }
 
-  private createJwt({ id }: User) {
+  private createJwt({ id }: Partial<User>) {
     return {
       accessToken: this._jwtService.sign({ id }),
     };
