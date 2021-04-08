@@ -4,6 +4,6 @@ export class AuthApi extends BaseApi {
   prefix: string = '/auth';
 
   async me() {
-    return this._httpClient.axios.get(this.endpoint('/me'));
+    return this._axios.get(this.endpoint('/me'));
   }
 }

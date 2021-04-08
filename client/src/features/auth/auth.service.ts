@@ -1,7 +1,8 @@
 import { action, computed, makeObservable, observable } from 'mobx';
 import { IUser } from '@vanilla-react/shared';
-import { HttpClientService, ConfigService } from '../shared/shared.module';
+import { ConfigService } from '../shared/shared.module';
 import { AuthApi } from './auth.module';
+import { AxiosInstance } from 'axios';
 
 export class AuthService {
   @observable
@@ -15,7 +16,7 @@ export class AuthService {
   constructor(
     private readonly _authApi: AuthApi,
     private readonly _config: ConfigService,
-    private readonly _httpClient: HttpClientService,
+    private readonly _axios: AxiosInstance,
   ) {
     makeObservable(this);
   }
@@ -40,7 +41,7 @@ export class AuthService {
 
   @action
   public setupInterceptors() {
-    this._httpClient.axios.interceptors.request.use(async (config) => {
+    this._axios.interceptors.request.use(async (config) => {
       const token = localStorage.getItem(this._config.accessTokenKey);
 
       config.headers = {
@@ -53,8 +54,8 @@ export class AuthService {
 
   @action
   public addAuthorizationHeader(accessToken: string) {
-    this._httpClient.axios.defaults.headers = {
-      ...this._httpClient.axios.defaults.headers,
+    this._axios.defaults.headers = {
+      ...this._axios.defaults.headers,
       Authorization: 'Bearer ' + accessToken,
     };
   }

@@ -1,7 +1,7 @@
-import { HttpClientService } from '../features/shared/http-client.service';
+import { AxiosInstance } from 'axios';
 
 export abstract class BaseApi {
-  constructor(protected readonly _httpClient: HttpClientService) {}
+  constructor(protected readonly _axios: AxiosInstance) {}
 
   abstract prefix: string;
 

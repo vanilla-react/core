@@ -1,12 +1,10 @@
+import { AxiosInstance } from 'axios';
 import {
   AuthApi,
   AuthService,
   useInitialAuth,
 } from './features/auth/auth.module';
-import {
-  HttpClientService,
-  ConfigService,
-} from './features/shared/shared.module';
+import { ConfigService } from './features/shared/shared.module';
 
 export interface IAvatarProps {
   name: string;
@@ -14,7 +12,7 @@ export interface IAvatarProps {
 
 export interface IProvidersContext {
   config: ConfigService;
-  httpClient: HttpClientService;
+  axios: AxiosInstance;
   authApi: AuthApi;
   authService: AuthService;
   useInitialAuth: typeof useInitialAuth;
