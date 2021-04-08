@@ -1,16 +1,16 @@
-import { IsString } from 'class-validator';
+import { IsNumber, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateSnippetDto {
-  @IsString()
   @ApiProperty()
-  title: string;
+  @IsString()
+  content: string;
 
-  @IsString()
   @ApiProperty()
-  JSContent: string;
+  @IsNumber()
+  programmingLanguageId: number;
 
-  @IsString()
   @ApiProperty()
-  ReactContent: string;
+  @IsString()
+  name: string;
 }
