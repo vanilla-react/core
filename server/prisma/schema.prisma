@@ -11,19 +11,26 @@ generator client {
 }
 
 model User {
-  id       Int        @id @default(autoincrement())
-  name     String
-  email    String     @unique
-  Snippets Snippet[]
-  Feedback Feedback[]
-  Kudos    Kudo[]
+  id        Int        @id @default(autoincrement())
+  name      String
+  email     String     @unique
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  Posts     Post[]
+  Feedback  Feedback[]
+  Kudos     Kudo[]
 }
 
-model Snippet {
-  id     Int           @id @default(autoincrement())
-  slug   String        @db.VarChar(255)
-  title  String        @db.VarChar(255)
-  status SnippetStatus @default(PENDING)
+model Post {
+  id     Int        @id @default(autoincrement())
+  slug   String     @db.VarChar(255)
+  title  String     @db.VarChar(255)
+  status PostStatus @default(PENDING)
+
+  Snippets Snippet[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   Author   User       @relation(fields: [userId], references: [id])
   userId   Int
@@ -31,14 +38,37 @@ model Snippet {
   Kudos    Kudo[]
 
   @@unique([title, userId])
+  @@index([slug])
+}
+
+model Snippet {
+  id      Int    @id @default(autoincrement())
+  content String @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Post                  Post                @relation(fields: [postId], references: [id])
+  postId                Int
+  ProgrammingLanguage   ProgrammingLanguage @relation(fields: [programmingLanguageId], references: [id])
+  programmingLanguageId Int
+}
+
+model ProgrammingLanguage {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  template String    @unique
+  Snippet  Snippet[]
 }
 
 model Feedback {
-  id        Int     @id @default(autoincrement())
-  content   String  @db.Text
-  Snippet   Snippet @relation(fields: [snippetId], references: [id])
-  snippetId Int
-  Author    User    @relation(fields: [userId], references: [id])
+  id        Int      @id @default(autoincrement())
+  content   String   @db.Text
+  Post      Post     @relation(fields: [postId], references: [id])
+  postId    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Author    User     @relation(fields: [userId], references: [id])
   userId    Int
 
   @@unique([userId, content])
@@ -48,13 +78,15 @@ model Kudo {
   Author User @relation(fields: [userId], references: [id])
   userId Int
 
-  Snippet   Snippet @relation(fields: [snippetId], references: [id])
-  snippetId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Post      Post     @relation(fields: [postId], references: [id])
+  postId    Int
 
-  @@id([userId, snippetId])
+  @@id([userId, postId])
 }
 
-enum SnippetStatus {
+enum PostStatus {
   PENDING
   APPROVED
 }
