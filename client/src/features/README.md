@@ -1,7 +1,7 @@
 Features will contain:
 
 - stores
-- controller
+- controllers
 - services
 - apis
 - and even custom hooks
