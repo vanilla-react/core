@@ -1,48 +1,70 @@
-//@ts-nocheck
 import { Injectable } from '@nestjs/common';
-import slugify from 'slugify';
 import { PrismaService } from 'src/prisma.service';
-import { CreateSnippetDto } from './dto/create-snippet.dto';
+import { UpdateSnippetDto } from './dto/update-snippet.dto';
 
 @Injectable()
 export class SnippetRepository {
   public constructor(private readonly _prismaService: PrismaService) {}
 
-  private addWithRelation = (id: number, relation = 'Author'): any => ({
-    [relation]: {
-      connect: {
-        id,
-      },
-    },
-  });
-
-  public getAll() {}
-
-  public getOneBySlug(slug: string) {
-    return this._prismaService.snippet.findFirst({
+  /**
+   *
+   * @description update doesn't know about the userId in the where-clause
+   * therefor we use updateMany with a strict where clause.
+   *
+   */
+  public async updateOne(
+    userId: number,
+    { id, programmingLanguageId, content }: UpdateSnippetDto,
+  ) {
+    const affectedRows = await this._prismaService.snippet.updateMany({
       where: {
-        slug,
+        id,
+        userId,
+        programmingLanguageId,
+        Post: {
+          status: 'PENDING',
+        },
       },
-    });
-  }
-
-  public async create(userId: number, createSnippetDto: CreateSnippetDto) {
-    return this._prismaService.snippet.create({
       data: {
-        ...this.addWithRelation(userId),
-        slug: await this.createSlug(createSnippetDto.title),
-        title: createSnippetDto.title,
-        JSContent: createSnippetDto.JSContent,
-        ReactContent: createSnippetDto.ReactContent,
-      },
-      include: {
-        Author: true,
+        content,
       },
     });
+
+    return affectedRows.count > 0;
   }
 
-  private async createSlug(title: string) {
-    const count = (await this._prismaService.snippet.count()) + 1;
-    return slugify(title + count);
+  /**
+   *
+   * @description uses transactions to tupdate many snippets for many posts,
+   * it only works when the post status is pending and the user owns the snippet.
+   *
+   */
+  public async updateInBulk(
+    userId: number,
+    updateSnippetDtos: UpdateSnippetDto[],
+  ) {
+    const snippets = updateSnippetDtos.map((snippet) =>
+      this.updateSnippet(userId, snippet),
+    );
+    return this._prismaService.$transaction(snippets);
+  }
+
+  private updateSnippet(
+    userId: number,
+    { id, programmingLanguageId, content }: UpdateSnippetDto,
+  ) {
+    return this._prismaService.snippet.updateMany({
+      where: {
+        id,
+        userId,
+        programmingLanguageId,
+        Post: {
+          status: 'PENDING',
+        },
+      },
+      data: {
+        content,
+      },
+    });
   }
 }
