@@ -1,3 +1,4 @@
+import { Prisma } from '.prisma/client';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { UpdateSnippetDto } from './dto/update-snippet.dto';
@@ -12,25 +13,9 @@ export class SnippetRepository {
    * therefor we use updateMany with a strict where clause.
    *
    */
-  public async updateOne(
-    userId: number,
-    { id, programmingLanguageId, content }: UpdateSnippetDto,
-  ) {
-    const affectedRows = await this._prismaService.snippet.updateMany({
-      where: {
-        id,
-        userId,
-        programmingLanguageId,
-        Post: {
-          status: 'PENDING',
-        },
-      },
-      data: {
-        content,
-      },
-    });
-
-    return affectedRows.count > 0;
+  public async updateOne(userId: number, updateSnippetDto: UpdateSnippetDto) {
+    const affectedRows = await this.updateOneSnippet(userId, updateSnippetDto);
+    return this.isUpdated(affectedRows);
   }
 
   /**
@@ -44,12 +29,16 @@ export class SnippetRepository {
     updateSnippetDtos: UpdateSnippetDto[],
   ) {
     const snippets = updateSnippetDtos.map((snippet) =>
-      this.updateSnippet(userId, snippet),
+      this.updateOneSnippet(userId, snippet),
     );
-    return this._prismaService.$transaction(snippets);
+    const resultsInRowsAffected = await this._prismaService.$transaction(
+      snippets,
+    );
+
+    return resultsInRowsAffected.every(this.isUpdated);
   }
 
-  private updateSnippet(
+  private updateOneSnippet(
     userId: number,
     { id, programmingLanguageId, content }: UpdateSnippetDto,
   ) {
@@ -66,5 +55,9 @@ export class SnippetRepository {
         content,
       },
     });
+  }
+
+  private isUpdated({ count }: Prisma.BatchPayload) {
+    return count > 0;
   }
 }

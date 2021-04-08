@@ -57,6 +57,8 @@ model Snippet {
   postId                Int
   ProgrammingLanguage   ProgrammingLanguage @relation(fields: [programmingLanguageId], references: [id])
   programmingLanguageId Int
+
+  @@unique([programmingLanguageId, postId])
 }
 
 model ProgrammingLanguage {
