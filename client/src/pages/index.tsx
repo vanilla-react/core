@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import { Searchbar } from '../components/header/components/searchbar.component';
 
 const Home = () => {
   return (

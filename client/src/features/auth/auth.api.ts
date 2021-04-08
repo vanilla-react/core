@@ -1,9 +1,9 @@
-import { BaseApi } from './base.api';
+import { BaseApi } from '../../lib';
 
 export class AuthApi extends BaseApi {
   prefix: string = '/auth';
 
   async me() {
-    return this.axios.get(this.endpoint('/me'));
+    return this._axios.get(this.endpoint('/me'));
   }
 }

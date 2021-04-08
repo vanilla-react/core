@@ -1,9 +1,9 @@
 import { AxiosInstance } from 'axios';
 
 export abstract class BaseApi {
-  abstract prefix: string;
+  constructor(protected readonly _axios: AxiosInstance) {}
 
-  constructor(protected readonly axios: AxiosInstance) {}
+  abstract prefix: string;
 
   protected endpoint(endpoint: string = '/') {
     return this.prefix + endpoint;

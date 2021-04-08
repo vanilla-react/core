@@ -1,8 +1,8 @@
 import { action, computed, makeObservable, observable } from 'mobx';
-import { AuthApi } from '../apis';
 import { IUser } from '@vanilla-react/shared';
+import { ConfigService } from '../shared/shared.module';
+import { AuthApi } from './auth.module';
 import { AxiosInstance } from 'axios';
-import { Configuration } from '../configuration';
 
 export class AuthService {
   @observable
@@ -15,8 +15,8 @@ export class AuthService {
 
   constructor(
     private readonly _authApi: AuthApi,
+    private readonly _config: ConfigService,
     private readonly _axios: AxiosInstance,
-    private readonly _config: Configuration,
   ) {
     makeObservable(this);
   }

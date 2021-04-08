@@ -1,5 +1,5 @@
 import { Flex, Image } from '@chakra-ui/react';
-import { IAvatarProps } from '../../../types';
+import { IAvatarProps } from '../../../../../types';
 
 export const Avatar: React.FC<IAvatarProps> = ({ name }) => {
   return (
