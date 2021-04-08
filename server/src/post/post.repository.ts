@@ -1,3 +1,4 @@
+import { Post } from '.prisma/client';
 import { Injectable } from '@nestjs/common';
 import slugify from 'slugify';
 import { PrismaService } from '../prisma.service';
@@ -28,6 +29,37 @@ export class PostRepository {
             })),
           },
         },
+      },
+    });
+  }
+
+  /**
+   * @param {number} [skip] - Starts fetching posts starting at this page
+   * @param {number} [take=10] - Returns take many posts
+   * @return {PrismaPromise<Post>}
+   */
+
+  public async getAll(skip: number = 0, take: number = 10) {
+    return this._prismaService.post.findMany({
+      skip,
+      take,
+      orderBy: {
+        updatedAt: 'desc',
+      },
+      select: {
+        title: true,
+        updatedAt: true,
+        createdAt: true,
+        status: true,
+        id: true,
+        slug: true,
+        Author: {
+          select: {
+            name: true,
+            id: true,
+          },
+        },
+        Snippets: true,
       },
     });
   }
