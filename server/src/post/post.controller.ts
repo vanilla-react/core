@@ -6,21 +6,28 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
+  BadRequestException,
 } from '@nestjs/common';
 import { PostService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
+import { User } from 'src/auth/decorators/user.decorator';
 
 @ApiTags('post')
+@ApiBearerAuth()
 @Controller('post')
 export class PostController {
   constructor(private readonly postService: PostService) {}
 
   @Post()
-  create(@Body() createPostDto: CreatePostDto) {
-    // return this.postService.create(createPostDto);
-    return createPostDto;
+  @UseGuards(JwtAuthGuard)
+  async create(@User() userId: number, @Body() createPostDto: CreatePostDto) {
+    return this.postService.create(userId, createPostDto).catch((err) => {
+      throw new BadRequestException(err.message);
+    });
   }
 
   @Get()
@@ -28,9 +35,9 @@ export class PostController {
     return this.postService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.postService.findOne(+id);
+  @Get(':name/:slug')
+  async findOne(@Param('name') name: string, @Param('slug') slug: string) {
+    return this.postService.getOneByAuthorNameAndSlug(name, slug);
   }
 
   @Patch(':id')

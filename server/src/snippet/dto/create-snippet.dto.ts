@@ -9,8 +9,4 @@ export class CreateSnippetDto {
   @ApiProperty()
   @IsNumber()
   programmingLanguageId: number;
-
-  @ApiProperty()
-  @IsString()
-  name: string;
 }

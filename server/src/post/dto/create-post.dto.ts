@@ -16,5 +16,5 @@ export class CreatePostDto {
     type: [CreateSnippetDto],
   })
   @Type(() => CreateSnippetDto)
-  snippet: CreateSnippetDto[];
+  snippets: CreateSnippetDto[];
 }
