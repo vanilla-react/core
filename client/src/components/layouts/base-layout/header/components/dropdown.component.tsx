@@ -9,7 +9,7 @@ import { FaPlusSquare, FaSignOutAlt } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { Avatar } from './avatar.component';
-import { useProviders } from '../../../../../di/useProviders.hook';
+import { useProviders } from '../../../../../entrypoint/useProviders.hook';
 
 export const Dropdown = () => {
   const router = useRouter();

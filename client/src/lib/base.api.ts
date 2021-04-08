@@ -1,4 +1,4 @@
-import { HttpClientService } from '../shared/http-client.service';
+import { HttpClientService } from '../features/shared/http-client.service';
 
 export abstract class BaseApi {
   constructor(protected readonly _httpClient: HttpClientService) {}

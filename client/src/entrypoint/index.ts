@@ -1,7 +1,10 @@
-import * as AuthModule from '../auth/auth.module';
-import * as SharedModule from '../shared/shared.module';
+import * as AuthModule from '../features/auth/auth.module';
+import * as SharedModule from '../features/shared/shared.module';
 
+// export your hooks
 export const useInitialAuth = AuthModule.useInitialAuth;
+
+// bootstrap your providers
 export const config = new SharedModule.ConfigService();
 export const httpClient = new SharedModule.HttpClientService(config);
 export const authApi = new AuthModule.AuthApi(httpClient);
