@@ -2,10 +2,10 @@ import 'reflect-metadata';
 
 import { CSSReset, ThemeProvider, theme } from '@chakra-ui/react';
 import { AppProps } from 'next/dist/next-server/lib/router/router';
-import { AppProvider } from '../contexts/app.context';
+import { AppProvider } from '../di/app.provider';
 
 import '../global.css';
-import { BaseLayout } from '../layouts';
+import { BaseLayout } from '../components/layouts';
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (

@@ -1,15 +1,15 @@
 import React from 'react';
-import { container } from '.';
-import { InversifyContext } from './inversify.context';
+import { ProvidersContext } from './providers.context';
+import * as container from './index';
 
 export const AppProvider: React.FC = ({ children }) => {
   return (
-    <InversifyContext.Provider
+    <ProvidersContext.Provider
       value={{
-        container,
+        ...container,
       }}
     >
       {children}
-    </InversifyContext.Provider>
+    </ProvidersContext.Provider>
   );
 };

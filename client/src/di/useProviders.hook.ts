@@ -1,4 +1,4 @@
 import { useContext } from 'react';
-import { InversifyContext } from './inversify.context';
+import { ProvidersContext } from './providers.context';
 
-export const useProviders = () => useContext(InversifyContext);
+export const useProviders = () => useContext(ProvidersContext);

@@ -1,9 +1,8 @@
-import { useProviders } from '../../../hooks/useProviders';
-
 import { Box, Flex } from '@chakra-ui/layout';
 import { GithubLogin } from './github-login.component';
 import { observer } from 'mobx-react-lite';
 import { Dropdown } from './dropdown.component';
+import { useProviders } from '../../../../../di/useProviders.hook';
 
 export const Auth = observer(() => {
   const { authService } = useProviders();
