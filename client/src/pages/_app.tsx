@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+
 import { CSSReset, ThemeProvider, theme } from '@chakra-ui/react';
 import { AppProps } from 'next/dist/next-server/lib/router/router';
 import { AppProvider } from '../contexts/app.context';
