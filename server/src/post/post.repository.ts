@@ -39,12 +39,12 @@ export class PostRepository {
    * @return {PrismaPromise<Post>}
    */
 
-  public async getAll(skip: number = 0, take: number = 10) {
+  public async getAll(skip = 0, take = 10) {
     return this._prismaService.post.findMany({
       skip,
       take,
       orderBy: {
-        updatedAt: 'desc',
+        updatedAt: 'asc',
       },
       select: {
         title: true,

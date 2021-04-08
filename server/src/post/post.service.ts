@@ -10,8 +10,13 @@ export class PostService {
     return this._postRepo.create(userId, createPostDto);
   }
 
-  findAll() {
-    return `This action returns all post`;
+  /**
+   * @param {number} [skip] - Starts fetching posts starting at this page
+   * @param {number} [take=10] - Returns take many posts
+   * @return {PrismaPromise<Post>}
+   */
+  public async getAll(skip?: number, take?: number) {
+    return this._postRepo.getAll(skip, take);
   }
 
   public async getOneByAuthorNameAndSlug(name: string, slug: string) {
