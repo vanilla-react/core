@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import { useProviders } from '../../../entrypoint/useProviders.hook';
+import { useProviders } from '@entrypoint/useProviders.hook';
 
 export const useInitialAuth = (accessToken: string | string[]) => {
   const router = useRouter();

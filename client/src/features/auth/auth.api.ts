@@ -1,4 +1,4 @@
-import { BaseApi } from '../../lib';
+import { BaseApi } from '@/lib';
 
 export class AuthApi extends BaseApi {
   prefix: string = '/auth';

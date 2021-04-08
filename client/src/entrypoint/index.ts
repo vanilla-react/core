@@ -1,8 +1,8 @@
 /* When adding new hooks or providers you need to update the interface in @/types.ts */
 
 import Axios from 'axios';
-import * as AuthModule from '../features/auth/auth.module';
-import * as SharedModule from '../features/shared/shared.module';
+import * as AuthModule from '@features/auth/auth.module';
+import * as SharedModule from '@features/shared/shared.module';
 
 export const useInitialAuth = AuthModule.useInitialAuth;
 

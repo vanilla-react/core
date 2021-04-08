@@ -3,7 +3,7 @@ import '../global.css';
 
 import { CSSReset, ThemeProvider, theme } from '@chakra-ui/react';
 import { AppProps } from 'next/dist/next-server/lib/router/router';
-import { AppProvider } from '../entrypoint/app.provider';
+import { AppProvider } from '@entrypoint/app.provider';
 
 import { BaseLayout } from '../components/layouts';
 
