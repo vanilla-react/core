@@ -23,7 +23,7 @@ model User {
 
 model Post {
   id     Int        @id @default(autoincrement())
-  slug   String     @unique @db.VarChar(255)
+  slug   String     @db.VarChar(255)
   title  String     @db.VarChar(255)
   status PostStatus @default(PENDING)
 
