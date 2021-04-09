@@ -41,7 +41,9 @@ export function generatePosts() {
         min: 1,
         max: 5,
       }),
-      status: index % 2 ? PostStatus.PENDING : PostStatus.APPROVED,
+      status: faker.datatype.number({ min: 0, max: 1 })
+        ? PostStatus.PENDING
+        : PostStatus.APPROVED,
     } as Post;
   });
 }
