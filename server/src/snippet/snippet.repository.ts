@@ -31,6 +31,7 @@ export class SnippetRepository {
     const snippets = updateSnippetDtos.map((snippet) =>
       this.updateOneSnippet(userId, snippet),
     );
+
     const resultsInRowsAffected = await this._prismaService.$transaction(
       snippets,
     );
