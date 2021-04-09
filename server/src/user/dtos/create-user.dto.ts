@@ -1,4 +1,4 @@
-import { IGithubUser } from 'src/types';
+import { IGithubUser } from '../../types';
 
 export class CreateUserDto {
   name: string;
@@ -6,6 +6,7 @@ export class CreateUserDto {
 
   static create(user: IGithubUser) {
     const _user = new CreateUserDto();
+
 
     _user.name = user.username;
     _user.email = user.emails[0].value;

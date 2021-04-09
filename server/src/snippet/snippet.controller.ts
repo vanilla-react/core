@@ -1,9 +1,9 @@
-import { Controller, Body, UseGuards, Patch } from '@nestjs/common';
+import { Controller, Body, Patch, UseGuards } from '@nestjs/common';
 import { SnippetService } from './snippet.service';
-import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { User } from 'src/auth/decorators/user.decorator';
 import { UpdateSnippetDto } from './dto/update-snippet.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt.guard';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { User } from '../auth/decorators/user.decorator';
 
 @ApiTags('snippet')
 @Controller('snippet')
