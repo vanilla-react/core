@@ -1,7 +1,7 @@
 //@ts-nocheck
 import { Injectable } from '@nestjs/common';
 import slugify from 'slugify';
-import { PrismaService } from 'src/prisma.service';
+import { PrismaService } from '../prisma.service';
 import { CreateSnippetDto } from './dto/create-snippet.dto';
 
 @Injectable()

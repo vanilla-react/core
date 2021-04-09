@@ -11,7 +11,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { Request, Response } from 'express';
 import { JwtAuthGuard } from './guards/jwt.guard';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { UserService } from 'src/user/user.service';
+import { UserService } from '../user/user.service';
 import { User } from './decorators/user.decorator';
 import { IGithubUser } from '../types';
 
