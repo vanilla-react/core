@@ -18,7 +18,9 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "yarn test:prepare jest --config ./test/jest-e2e.json",
+    "test:migrate": "yarn test:prepare prisma migrate dev",
+    "test:prepare": "DATABASE_URL=postgresql://postgres:postgres@localhost:5432/vanilla-react-test?schema=public"
   },
   "dependencies": {
     "@nestjs/common": "^7.6.13",
@@ -34,7 +36,9 @@
     "@vanilla-react/shared": "1.0.0",
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
+    "cross-var": "^1.1.0",
     "dotenv": "^8.2.0",
+    "dotenv-cli": "^4.0.0",
     "passport": "^0.4.1",
     "passport-github2": "^0.1.12",
     "passport-jwt": "^4.0.0",
