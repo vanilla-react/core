@@ -5,29 +5,34 @@ import {
   UseGuards,
   HttpCode,
   BadRequestException,
+  Param,
+  ParseIntPipe,
+  Get,
 } from '@nestjs/common';
 import { SnippetService } from './snippet.service';
 import { UpdateSnippetDto } from './dto/update-snippet.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 import { User } from '../auth/decorators/user.decorator';
+import { UpdateBulkSnippetsDto } from './dto/update-bulk-snippets';
 
-@ApiTags('snippet')
+@ApiTags('snippets')
 @Controller('snippet')
 @ApiBearerAuth()
 export class SnippetController {
   constructor(private readonly _snippetService: SnippetService) {}
 
-  @Patch()
+  @Patch('/bulk')
   @HttpCode(204)
   @UseGuards(JwtAuthGuard)
-  async update(
+  @ApiBody({ type: [UpdateBulkSnippetsDto] })
+  async updateInBulk(
     @User() userId: number,
-    @Body() updateSnippetDto: UpdateSnippetDto,
+    @Body() updateSnippetsBulkDto: UpdateBulkSnippetsDto[],
   ) {
-    const hasBeenUpdated = await this._snippetService.updateSnippet(
+    const hasBeenUpdated = await this._snippetService.updateSnippetsInBulk(
       userId,
-      updateSnippetDto,
+      updateSnippetsBulkDto,
     );
 
     if (!hasBeenUpdated) {
@@ -37,16 +42,18 @@ export class SnippetController {
     return;
   }
 
-  @Patch('/bulk')
+  @Patch(':id')
   @HttpCode(204)
   @UseGuards(JwtAuthGuard)
-  async updateInBulk(
+  async update(
+    @Param('id', new ParseIntPipe()) postId: number,
     @User() userId: number,
-    @Body() updateSnippetsBulkDto: UpdateSnippetDto[],
+    @Body() updateSnippetDto: UpdateSnippetDto,
   ) {
-    const hasBeenUpdated = await this._snippetService.updateSnippetsInBulk(
+    const hasBeenUpdated = await this._snippetService.updateSnippet(
+      postId,
       userId,
-      updateSnippetsBulkDto,
+      updateSnippetDto,
     );
 
     if (!hasBeenUpdated) {

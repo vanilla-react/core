@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { UpdateBulkSnippetsDto } from './dto/update-bulk-snippets';
 import { UpdateSnippetDto } from './dto/update-snippet.dto';
 import { SnippetRepository } from './snippet.repository';
 
@@ -7,15 +8,16 @@ export class SnippetService {
   public constructor(private readonly _snippetRepo: SnippetRepository) {}
 
   public async updateSnippet(
+    postId: number,
     userId: number,
     updateSnippetDto: UpdateSnippetDto,
   ) {
-    return this._snippetRepo.updateOne(userId, updateSnippetDto);
+    return this._snippetRepo.updateOne(postId, userId, updateSnippetDto);
   }
 
   public async updateSnippetsInBulk(
     userId: number,
-    updateSnippetDto: UpdateSnippetDto[],
+    updateSnippetDto: UpdateBulkSnippetsDto[],
   ) {
     return this._snippetRepo.updateInBulk(userId, updateSnippetDto);
   }
