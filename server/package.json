@@ -18,9 +18,8 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "yarn test:prepare jest --config ./test/jest-e2e.json",
-    "test:migrate": "yarn test:prepare prisma migrate dev",
-    "test:prepare": "DATABASE_URL=postgresql://postgres:postgres@localhost:5432/vanilla-react-test?schema=public"
+    "test:e2e": "dotenv -e .env.test -- jest --config ./test/jest-e2e.json",
+    "test:migrate": "dotenv -e .env.test -- prisma migrate dev"
   },
   "dependencies": {
     "@nestjs/common": "^7.6.13",
