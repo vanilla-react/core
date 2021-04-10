@@ -12,3 +12,8 @@ export interface IGithubUser {
 export interface Email {
   value: string;
 }
+
+export enum PostStatus {
+  PENDING = 'PENDING',
+  APPROVED = 'APPROVED',
+}
