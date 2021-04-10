@@ -1,7 +1,7 @@
 import { IsString } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
-import { CreateSnippetDto } from 'src/snippet/dto/create-snippet.dto';
+import { CreateSnippetDto } from '../../snippet/dto/create-snippet.dto';
 
 export class CreatePostDto {
   @IsString()

@@ -1,7 +1,7 @@
 import { User } from '.prisma/client';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { IGithubUser } from 'src/types';
+import { IGithubUser } from '../types';
 
 import { CreateUserDto } from '../user/dtos/create-user.dto';
 import { UserService } from '../user/user.service';

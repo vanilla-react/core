@@ -3,7 +3,7 @@ import 'dotenv/config';
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-github2';
-import { IGithubUser } from 'src/types';
+import { IGithubUser } from '../../types';
 
 @Injectable()
 export class GithubStrategy extends PassportStrategy(Strategy, 'github') {

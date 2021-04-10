@@ -1,50 +1,65 @@
 import {
   Controller,
-  Get,
-  Post,
   Body,
   Patch,
-  Param,
-  Delete,
   UseGuards,
-  Req,
+  HttpCode,
+  BadRequestException,
+  Param,
+  ParseIntPipe,
+  Get,
 } from '@nestjs/common';
 import { SnippetService } from './snippet.service';
-import { CreateSnippetDto } from './dto/create-snippet.dto';
 import { UpdateSnippetDto } from './dto/update-snippet.dto';
-import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
-import { ApiBearerAuth, ApiProperty, ApiTags } from '@nestjs/swagger';
-import { User } from 'src/auth/decorators/user.decorator';
+import { JwtAuthGuard } from '../auth/guards/jwt.guard';
+import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
+import { User } from '../auth/decorators/user.decorator';
+import { UpdateBulkSnippetsDto } from './dto/update-bulk-snippets';
 
-@ApiTags('snippet')
+@ApiTags('snippets')
 @Controller('snippet')
 @ApiBearerAuth()
 export class SnippetController {
-  constructor(private readonly snippetService: SnippetService) {}
+  constructor(private readonly _snippetService: SnippetService) {}
 
-  @Post()
+  @Patch('/bulk')
+  @HttpCode(204)
   @UseGuards(JwtAuthGuard)
-  create(@User() userId: number, @Body() createSnippetDto: CreateSnippetDto) {
-    return this.snippetService.create(userId, createSnippetDto);
-  }
+  @ApiBody({ type: [UpdateBulkSnippetsDto] })
+  async updateInBulk(
+    @User() userId: number,
+    @Body() updateSnippetsBulkDto: UpdateBulkSnippetsDto[],
+  ) {
+    const hasBeenUpdated = await this._snippetService.updateSnippetsInBulk(
+      userId,
+      updateSnippetsBulkDto,
+    );
 
-  @Get()
-  findAll() {
-    return this.snippetService.findAll();
-  }
+    if (!hasBeenUpdated) {
+      throw new BadRequestException();
+    }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.snippetService.findOne(+id);
+    return;
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSnippetDto: UpdateSnippetDto) {
-    return this.snippetService.update(+id, updateSnippetDto);
-  }
+  @HttpCode(204)
+  @UseGuards(JwtAuthGuard)
+  async update(
+    @Param('id', new ParseIntPipe()) postId: number,
+    @User() userId: number,
+    @Body() updateSnippetDto: UpdateSnippetDto,
+  ) {
+    const hasBeenUpdated = await this._snippetService.updateSnippet(
+      postId,
+      userId,
+      updateSnippetDto,
+    );
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.snippetService.remove(+id);
+    if (!hasBeenUpdated) {
+      throw new BadRequestException();
+    }
+
+    return;
   }
 }

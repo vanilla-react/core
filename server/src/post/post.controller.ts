@@ -18,10 +18,9 @@ import { PostService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
-import { User } from 'src/auth/decorators/user.decorator';
-import { PostStatus } from '.prisma/client';
-import { PostQueryDto } from './dto/post-query-dto';
+import { JwtAuthGuard } from '../auth/guards/jwt.guard';
+import { User } from '../auth/decorators/user.decorator';
+import { PostStatus } from '../types';
 
 @ApiTags('post')
 @ApiBearerAuth()
