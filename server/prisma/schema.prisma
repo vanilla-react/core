@@ -33,15 +33,14 @@ model Post {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  Author User @relation(fields: [userId], references: [id])
+  User   User @relation(fields: [userId], references: [id])
   userId Int
 
   Feedback Feedback[]
   Kudos    Kudo[]
   Snippets Snippet[]
 
-  @@unique([title, userId])
-  @@index([slug])
+  @@unique([slug, userId])
 }
 
 model Snippet {
