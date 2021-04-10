@@ -4,9 +4,6 @@ import slugify from 'slugify';
 import { PrismaService } from '../prisma.service';
 import { CreatePostDto } from './dto/create-post.dto';
 
-type KeysOfType<O, T> = {
-  [K in keyof O]: O[K] extends T ? K : never;
-}[keyof O];
 @Injectable()
 export class PostRepository {
   public constructor(private readonly _prismaService: PrismaService) {}
