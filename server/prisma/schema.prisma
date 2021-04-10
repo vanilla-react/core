@@ -33,7 +33,7 @@ model Post {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  Author User @relation(fields: [userId], references: [id])
+  User   User @relation(fields: [userId], references: [id])
   userId Int
 
   Feedback Feedback[]
