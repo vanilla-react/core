@@ -40,8 +40,7 @@ model Post {
   Kudos    Kudo[]
   Snippets Snippet[]
 
-  @@unique([title, userId])
-  @@index([slug])
+  @@unique([slug, userId])
 }
 
 model Snippet {
