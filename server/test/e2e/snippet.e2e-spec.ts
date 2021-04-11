@@ -1,10 +1,11 @@
 import { INestApplication } from '@nestjs/common';
-import { createAppModule } from './helpers/app-module';
+import { createAppModule } from '../helpers/app-module';
 import * as request from 'supertest';
-import { UpdateSnippetDto } from '../src/snippet/dto/update-snippet.dto';
-import * as Seeder from './helpers/seeder';
+import { UpdateSnippetDto } from '../../src/snippet/dto/update-snippet.dto';
+import * as Seeder from '../helpers/seeder';
 import { PrismaClient } from '.prisma/client';
-import { UpdateBulkSnippetsDto } from '../src/snippet/dto/update-bulk-snippets';
+import { UpdateBulkSnippetsDto } from '../../src/snippet/dto/update-bulk-snippets';
+import { PrismaService } from '../../src/prisma.service';
 
 const PREFIX = '/snippet';
 
@@ -36,6 +37,25 @@ describe('Snippet Controller', () => {
         .expect(400);
     });
 
+    it('should not update the resource when trying to update a resource which the user does not own', async () => {
+      const updateSnippetDto = new UpdateSnippetDto();
+
+      updateSnippetDto.content = 'updated content';
+      updateSnippetDto.programmingLanguageId = 1;
+
+      const originalSnippet = Seeder.snippets.find((s) => s.id === 2);
+
+      await request(httpServer)
+        .patch(PREFIX + '/2')
+        .send(updateSnippetDto);
+
+      const prisma = app.get(PrismaService);
+
+      const snippet = await prisma.snippet.findFirst({ where: { id: 2 } });
+
+      expect(snippet).toEqual(originalSnippet);
+    });
+
     it('should return a 204 status code when the snippet has been updated', async () => {
       const updateSnippetDto = new UpdateSnippetDto();
 
@@ -63,7 +83,7 @@ describe('Snippet Controller', () => {
         .expect(400);
     });
 
-    // updateMany does not throw therefor transaction does not rollback
+    // Not using transactions at the moment.
     it.skip('should not update the snippets when one of the given snippets is wrong', async () => {
       const updateSnippetDto = new UpdateBulkSnippetsDto();
 
@@ -148,9 +168,9 @@ describe('Snippet Controller', () => {
 
       const updateSnippetDto2 = new UpdateBulkSnippetsDto();
 
-      updateSnippetDto.content = 'updated content2';
-      updateSnippetDto.programmingLanguageId = 2;
-      updateSnippetDto.id = 2;
+      updateSnippetDto2.content = 'updated content2';
+      updateSnippetDto2.programmingLanguageId = 2;
+      updateSnippetDto2.id = 2;
 
       await request(httpServer)
         .patch(PREFIX + '/bulk')

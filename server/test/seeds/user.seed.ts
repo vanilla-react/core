@@ -9,6 +9,13 @@ const users: User[] = [
     createdAt: new Date(),
     updatedAt: new Date(),
   },
+  {
+    id: 2,
+    name: 'doe-john',
+    email: 'doe-john@test.com',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
 ];
 
 export async function createUsersUp(client: PrismaClient) {
