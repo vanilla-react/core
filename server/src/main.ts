@@ -9,6 +9,9 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  app.setGlobalPrefix('api');
+
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
@@ -31,7 +34,7 @@ async function bootstrap() {
       persistAuthorization: true,
     },
   };
-  SwaggerModule.setup('api', app, document, swaggerCustomOptions);
+  SwaggerModule.setup('swagger', app, document, swaggerCustomOptions);
 
   app.enableCors({
     origin: '*',
