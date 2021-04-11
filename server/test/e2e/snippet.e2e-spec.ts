@@ -1,12 +1,11 @@
 import { INestApplication } from '@nestjs/common';
-import { createAppModule } from './helpers/app-module';
+import { createAppModule } from '../helpers/app-module';
 import * as request from 'supertest';
-import { UpdateSnippetDto } from '../src/snippet/dto/update-snippet.dto';
-import * as Seeder from './helpers/seeder';
+import { UpdateSnippetDto } from '../../src/snippet/dto/update-snippet.dto';
+import * as Seeder from '../helpers/seeder';
 import { PrismaClient } from '.prisma/client';
-import { UpdateBulkSnippetsDto } from '../src/snippet/dto/update-bulk-snippets';
-import { SnippetRepository } from '../src/snippet/snippet.repository';
-import { PrismaService } from '../src/prisma.service';
+import { UpdateBulkSnippetsDto } from '../../src/snippet/dto/update-bulk-snippets';
+import { PrismaService } from '../../src/prisma.service';
 
 const PREFIX = '/snippet';
 
