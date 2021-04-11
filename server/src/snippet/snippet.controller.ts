@@ -10,7 +10,6 @@ import {
 import { SnippetService } from './snippet.service';
 import { UpdateSnippetDto } from './dto/update-snippet.dto';
 import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
-import { User } from '../auth/decorators/user.decorator';
 import { UpdateBulkSnippetsDto } from './dto/update-bulk-snippets';
 import { IsOwner } from './decorators/is-resource-owner.decorator';
 
@@ -24,12 +23,8 @@ export class SnippetController {
   @HttpCode(204)
   @IsOwner()
   @ApiBody({ type: [UpdateBulkSnippetsDto] })
-  async updateInBulk(
-    @User() userId: number,
-    @Body() updateSnippetsBulkDto: UpdateBulkSnippetsDto[],
-  ) {
+  async updateInBulk(@Body() updateSnippetsBulkDto: UpdateBulkSnippetsDto[]) {
     const hasBeenUpdated = await this._snippetService.updateSnippetsInBulk(
-      userId,
       updateSnippetsBulkDto,
     );
 

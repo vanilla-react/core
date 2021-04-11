@@ -1,4 +1,3 @@
-import { Prisma } from '.prisma/client';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { UpdateBulkSnippetsDto } from './dto/update-bulk-snippets';
@@ -23,12 +22,6 @@ export class SnippetRepository {
     });
   }
 
-  /**
-   *
-   * @description update doesn't know about the userId in the where-clause
-   * therefor we use updateMany with a strict where clause.
-   *
-   */
   public async updateOne(
     id: number,
     { programmingLanguageId, content }: UpdateSnippetDto,
@@ -66,41 +59,18 @@ export class SnippetRepository {
     return !!result;
   }
 
-  /**
-   *
-   * @description uses transactions to tupdate many snippets for many posts,
-   * it only works when the post status is pending and the user owns the snippet.
-   *
-   */
-  public async updateInBulk(
-    userId: number,
-    updateSnippetDtos: UpdateBulkSnippetsDto[],
-  ) {
-    const snippets = updateSnippetDtos.map(
-      ({ id, content, programmingLanguageId }) =>
-        this._prismaService.snippet.updateMany({
-          where: {
-            id,
-            userId,
-            programmingLanguageId,
-            Post: {
-              status: 'PENDING',
-            },
-          },
-          data: {
-            content,
-          },
-        }),
-    );
+  public async updateInBulk(updateSnippetDtos: UpdateBulkSnippetsDto[]) {
+    for (let snippet of updateSnippetDtos) {
+      const res = await this.updateOne(snippet.id, {
+        programmingLanguageId: snippet.programmingLanguageId,
+        content: snippet.content,
+      });
 
-    const resultsInRowsAffected = await this._prismaService.$transaction(
-      snippets,
-    );
+      if (!res) {
+        return false;
+      }
+    }
 
-    return resultsInRowsAffected.every(this.isUpdated);
-  }
-
-  private isUpdated({ count }: Prisma.BatchPayload) {
-    return count > 0;
+    return true;
   }
 }

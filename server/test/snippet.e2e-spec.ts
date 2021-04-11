@@ -84,7 +84,7 @@ describe('Snippet Controller', () => {
         .expect(400);
     });
 
-    // updateMany does not throw therefor transaction does not rollback
+    // Not using transactions at the moment.
     it.skip('should not update the snippets when one of the given snippets is wrong', async () => {
       const updateSnippetDto = new UpdateBulkSnippetsDto();
 
@@ -169,9 +169,9 @@ describe('Snippet Controller', () => {
 
       const updateSnippetDto2 = new UpdateBulkSnippetsDto();
 
-      updateSnippetDto.content = 'updated content2';
-      updateSnippetDto.programmingLanguageId = 2;
-      updateSnippetDto.id = 2;
+      updateSnippetDto2.content = 'updated content2';
+      updateSnippetDto2.programmingLanguageId = 2;
+      updateSnippetDto2.id = 2;
 
       await request(httpServer)
         .patch(PREFIX + '/bulk')

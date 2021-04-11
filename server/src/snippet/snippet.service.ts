@@ -19,10 +19,7 @@ export class SnippetService {
     return this._snippetRepo.updateOne(postId, updateSnippetDto);
   }
 
-  public async updateSnippetsInBulk(
-    userId: number,
-    updateSnippetDto: UpdateBulkSnippetsDto[],
-  ) {
-    return this._snippetRepo.updateInBulk(userId, updateSnippetDto);
+  public async updateSnippetsInBulk(updateSnippetDto: UpdateBulkSnippetsDto[]) {
+    return this._snippetRepo.updateInBulk(updateSnippetDto);
   }
 }
