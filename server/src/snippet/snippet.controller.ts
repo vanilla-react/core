@@ -2,19 +2,17 @@ import {
   Controller,
   Body,
   Patch,
-  UseGuards,
   HttpCode,
   BadRequestException,
   Param,
   ParseIntPipe,
-  Get,
 } from '@nestjs/common';
 import { SnippetService } from './snippet.service';
 import { UpdateSnippetDto } from './dto/update-snippet.dto';
-import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 import { User } from '../auth/decorators/user.decorator';
 import { UpdateBulkSnippetsDto } from './dto/update-bulk-snippets';
+import { IsOwner } from './decorators/is-resource-owner.decorator';
 
 @ApiTags('snippets')
 @Controller('snippet')
@@ -24,7 +22,7 @@ export class SnippetController {
 
   @Patch('/bulk')
   @HttpCode(204)
-  @UseGuards(JwtAuthGuard)
+  @IsOwner()
   @ApiBody({ type: [UpdateBulkSnippetsDto] })
   async updateInBulk(
     @User() userId: number,
@@ -44,7 +42,7 @@ export class SnippetController {
 
   @Patch(':id')
   @HttpCode(204)
-  @UseGuards(JwtAuthGuard)
+  @IsOwner()
   async update(
     @Param('id', new ParseIntPipe()) postId: number,
     @User() userId: number,

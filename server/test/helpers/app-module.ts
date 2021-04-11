@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ExecutionContext } from '@nestjs/common';
 import { AppModule } from './../../src/app.module';
 import { JwtAuthGuard } from '../../src/auth/guards/jwt.guard';
+import { OwnerGuard } from '../../src/snippet/guards/owner.guard';
 
 export async function createAppModule() {
   const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -9,10 +10,14 @@ export async function createAppModule() {
   })
     .overrideGuard(JwtAuthGuard)
     .useValue({
-      canActivate: (context: ExecutionContext) => {
+      canActivate: jest.fn((context: ExecutionContext) => {
         context.switchToHttp().getRequest().user = { id: 1 };
         return true;
-      },
+      }),
+    })
+    .overrideGuard(OwnerGuard)
+    .useValue({
+      canActivate: jest.fn(() => true),
     })
     .compile();
 

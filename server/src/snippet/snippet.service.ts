@@ -7,6 +7,10 @@ import { SnippetRepository } from './snippet.repository';
 export class SnippetService {
   public constructor(private readonly _snippetRepo: SnippetRepository) {}
 
+  public async userOwnsResourceById(id: number, userId: number) {
+    return this._snippetRepo.userOwnsResourceById(id, userId);
+  }
+
   public async updateSnippet(
     postId: number,
     userId: number,

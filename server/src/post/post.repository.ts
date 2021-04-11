@@ -53,7 +53,7 @@ export class PostRepository {
     return this._prismaService.post.findFirst({
       where: {
         slug,
-        Author: {
+        User: {
           name,
         },
       },
@@ -68,7 +68,7 @@ export class PostRepository {
     const snippets = this._prismaService.snippet.deleteMany({
       where: {
         Post: {
-          Author: {
+          User: {
             name: name,
           },
           slug,
@@ -77,7 +77,7 @@ export class PostRepository {
     });
     const posts = this._prismaService.post.deleteMany({
       where: {
-        Author: {
+        User: {
           name,
         },
         slug,
@@ -98,7 +98,7 @@ export class PostRepository {
     status: true,
     id: true,
     slug: true,
-    Author: {
+    User: {
       select: {
         name: true,
         id: true,
@@ -107,7 +107,7 @@ export class PostRepository {
     Snippets: true,
   });
 
-  private addWithRelation = (id: number, relation = 'Author'): any => ({
+  private addWithRelation = (id: number, relation = 'User'): any => ({
     [relation]: {
       connect: {
         id,

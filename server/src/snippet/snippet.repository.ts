@@ -8,6 +8,15 @@ import { UpdateSnippetDto } from './dto/update-snippet.dto';
 export class SnippetRepository {
   public constructor(private readonly _prismaService: PrismaService) {}
 
+  public async userOwnsResourceById(id: number, userId: number) {
+    return this._prismaService.snippet.findFirst({
+      where: {
+        id,
+        userId,
+      },
+    });
+  }
+
   /**
    *
    * @description update doesn't know about the userId in the where-clause
