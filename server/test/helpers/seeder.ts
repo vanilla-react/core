@@ -22,3 +22,5 @@ export async function init(prismaClient: PrismaClient) {
   await down(prismaClient);
   await up(prismaClient);
 }
+
+export const snippets = Snippets.snippets;

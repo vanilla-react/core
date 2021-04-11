@@ -5,6 +5,8 @@ import { UpdateSnippetDto } from '../src/snippet/dto/update-snippet.dto';
 import * as Seeder from './helpers/seeder';
 import { PrismaClient } from '.prisma/client';
 import { UpdateBulkSnippetsDto } from '../src/snippet/dto/update-bulk-snippets';
+import { SnippetRepository } from '../src/snippet/snippet.repository';
+import { PrismaService } from '../src/prisma.service';
 
 const PREFIX = '/snippet';
 
@@ -34,6 +36,25 @@ describe('Snippet Controller', () => {
         .patch(PREFIX + '/5')
         .send(updateSnippetDto)
         .expect(400);
+    });
+
+    it('should not update the resource when trying to update a resource which the user does not own', async () => {
+      const updateSnippetDto = new UpdateSnippetDto();
+
+      updateSnippetDto.content = 'updated content';
+      updateSnippetDto.programmingLanguageId = 1;
+
+      const originalSnippet = Seeder.snippets.find((s) => s.id === 2);
+
+      await request(httpServer)
+        .patch(PREFIX + '/2')
+        .send(updateSnippetDto);
+
+      const prisma = app.get(PrismaService);
+
+      const snippet = await prisma.snippet.findFirst({ where: { id: 2 } });
+
+      expect(snippet).toEqual(originalSnippet);
     });
 
     it('should return a 204 status code when the snippet has been updated', async () => {
