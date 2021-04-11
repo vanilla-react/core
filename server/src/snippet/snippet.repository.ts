@@ -3,16 +3,22 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { UpdateBulkSnippetsDto } from './dto/update-bulk-snippets';
 import { UpdateSnippetDto } from './dto/update-snippet.dto';
+import { UserOwnsResourceDto } from './dto/user-owns-resource.dto';
 
 @Injectable()
 export class SnippetRepository {
   public constructor(private readonly _prismaService: PrismaService) {}
 
-  public async userOwnsResourceById(id: number, userId: number) {
+  public async userOwnsResourceById({
+    postId,
+    userId,
+    programmingLanguageId,
+  }: UserOwnsResourceDto) {
     return this._prismaService.snippet.findFirst({
       where: {
-        id,
+        id: postId,
         userId,
+        programmingLanguageId,
       },
     });
   }
@@ -25,16 +31,31 @@ export class SnippetRepository {
    */
   public async updateOne(
     id: number,
-    userId: number,
     { programmingLanguageId, content }: UpdateSnippetDto,
   ) {
-    const affectedRows = await this._prismaService.snippet.updateMany({
+    const post = await this._prismaService.post.findFirst({
       where: {
-        id,
-        userId,
-        programmingLanguageId,
-        Post: {
-          status: 'PENDING',
+        status: 'PENDING',
+        Snippets: {
+          some: {
+            id,
+          },
+        },
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    if (!post) {
+      return false;
+    }
+
+    const result = await this._prismaService.snippet.update({
+      where: {
+        programmingLanguageId_postId: {
+          programmingLanguageId,
+          postId: post.id,
         },
       },
       data: {
@@ -42,7 +63,7 @@ export class SnippetRepository {
       },
     });
 
-    return this.isUpdated(affectedRows);
+    return !!result;
   }
 
   /**

@@ -45,12 +45,10 @@ export class SnippetController {
   @IsOwner()
   async update(
     @Param('id', new ParseIntPipe()) postId: number,
-    @User() userId: number,
     @Body() updateSnippetDto: UpdateSnippetDto,
   ) {
     const hasBeenUpdated = await this._snippetService.updateSnippet(
       postId,
-      userId,
       updateSnippetDto,
     );
 
