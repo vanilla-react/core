@@ -1,18 +1,12 @@
+import { Post, PostStatus, Prisma } from '.prisma/client';
 import { Injectable } from '@nestjs/common';
 import slugify from 'slugify';
 import { PrismaService } from '../prisma.service';
 import { CreatePostDto } from './dto/create-post.dto';
+
 @Injectable()
 export class PostRepository {
   public constructor(private readonly _prismaService: PrismaService) {}
-
-  private addWithRelation = (id: number, relation = 'Author'): any => ({
-    [relation]: {
-      connect: {
-        id,
-      },
-    },
-  });
 
   public async create(userId: number, createPostDto: CreatePostDto) {
     return this._prismaService.post.create({
@@ -32,6 +26,29 @@ export class PostRepository {
     });
   }
 
+  /**
+   * @param {number} [skip] - Starts fetching posts starting at this page
+   * @param {number} [take=10] - Returns take many posts
+   * @param {PostStatus} [status] - Fetches posts with this status
+   * @return {PrismaPromise<Post>}
+   */
+
+  public async getAll(skip = 0, take = 10, status?: string) {
+    return this._prismaService.post.findMany({
+      skip,
+      take,
+      where: {
+        ...this.addWithFilter(status),
+      },
+      orderBy: {
+        updatedAt: 'asc',
+      },
+      select: {
+        ...this.selectWantedFields(),
+      },
+    });
+  }
+
   public async getOneByAuthorNameAndSlug(name: string, slug: string) {
     return this._prismaService.post.findFirst({
       where: {
@@ -40,10 +57,72 @@ export class PostRepository {
           name,
         },
       },
+      select: {
+        ...this.selectWantedFields(),
+      },
     });
+  }
+
+  public async deleteOneByAuthorNameAndSlug(name: string, slug: string) {
+    //Delete all snippets of that post first
+    const snippets = this._prismaService.snippet.deleteMany({
+      where: {
+        Post: {
+          Author: {
+            name: name,
+          },
+          slug,
+        },
+      },
+    });
+    const posts = this._prismaService.post.deleteMany({
+      where: {
+        Author: {
+          name,
+        },
+        slug,
+      },
+    });
+
+    return this._prismaService.$transaction([snippets, posts]);
   }
 
   private createSlug(title: string) {
     return slugify(title);
+  }
+
+  private selectWantedFields = (): Prisma.PostSelect => ({
+    title: true,
+    updatedAt: true,
+    createdAt: true,
+    status: true,
+    id: true,
+    slug: true,
+    Author: {
+      select: {
+        name: true,
+        id: true,
+      },
+    },
+    Snippets: true,
+  });
+
+  private addWithRelation = (id: number, relation = 'Author'): any => ({
+    [relation]: {
+      connect: {
+        id,
+      },
+    },
+  });
+
+  private addWithFilter(
+    value?: string | number,
+    field: keyof Prisma.PostWhereInput = 'status',
+  ): Prisma.PostWhereInput {
+    return {
+      [field]: {
+        equals: value,
+      },
+    };
   }
 }
