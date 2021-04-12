@@ -17,7 +17,7 @@ export const Header = observer(() => {
       bgColor="white"
       borderBottom="1px solid #eee"
     >
-      <Container w="100%" maxW="1600px" display="flex" alignItems="center">
+      <Container size="xl" display="flex" alignItems="center">
         <Flex w="100%" alignItems="center">
           <Logo />
           <Searchbar />

@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { Header } from '@components/index';
 import { useHooks } from '@entrypoint/useHooks.hook';
 import { Spinner } from '@components/generic';
+import { Container } from '@chakra-ui/react';
 
 export const BaseLayout = observer(({ children }) => {
   const router = useRouter();
@@ -17,7 +18,7 @@ export const BaseLayout = observer(({ children }) => {
   return (
     <>
       <Header />
-      {children}
+      <Container size="xl">{children}</Container>
     </>
   );
 });
