@@ -1,5 +1,6 @@
 import { IPost } from '@/types';
 import { Box, Flex, List, ListItem } from '@chakra-ui/react';
+import { PostFilters } from './post-filters.component';
 import { Post } from './post.component';
 
 export interface IPostsProps {
@@ -7,6 +8,10 @@ export interface IPostsProps {
 }
 
 export const Posts = ({ posts }: IPostsProps) => {
+  const sortedPosts = posts?.sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+  );
+
   return (
     <Flex
       mt={12}
@@ -16,42 +21,13 @@ export const Posts = ({ posts }: IPostsProps) => {
     >
       <Box bgColor="#fcfcfc" flex="1" borderBottom="1px solid #eee">
         <Box py={2} ml={6}>
-          <List display="flex">
-            <ListItem
-              fontWeight="bold"
-              color="pink.500"
-              fontSize="1.1rem"
-              p={4}
-              transition="color ease .2s"
-              _hover={{
-                color: 'pink.500',
-              }}
-              cursor="pointer"
-            >
-              Recent Posts
-            </ListItem>
-            <ListItem
-              fontSize="1.1rem"
-              p={4}
-              ml={4}
-              cursor="pointer"
-              transition="color ease .2s"
-              _hover={{
-                color: 'pink.500',
-              }}
-            >
-              Hot Posts
-            </ListItem>
-          </List>
+          <PostFilters />
         </Box>
       </Box>
       <Box flex="3">
-        {posts
-          // @ts-expect-error we cast it to date which we can compare
-          ?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-          .map((post) => (
-            <Post {...post} key={post.id} />
-          ))}
+        {sortedPosts?.map((post) => (
+          <Post {...post} key={post.id} />
+        ))}
       </Box>
     </Flex>
   );
