@@ -23,8 +23,8 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 
 export default MyApp;
 
-MyApp.getInitialProps = async (ctx: any) => {
+export async function getServerSideProps(ctx: any) {
   return {
     accessToken: ctx.query?.accessToken,
   };
-};
+}

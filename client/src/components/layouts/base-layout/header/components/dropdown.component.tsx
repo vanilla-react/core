@@ -40,7 +40,7 @@ export const Dropdown = () => {
       />
       <MenuList border="1px solid #eee">
         <MenuItem
-          display={['flex', 'none']}
+          display={{ base: 'flex', md: 'none' }}
           icon={<FaPlusSquare />}
           onClick={() => console.log('create post')}
         >

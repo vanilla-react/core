@@ -1,37 +1,33 @@
-import { postApi } from '@/entrypoint';
+import { Posts, Spinner } from '@/components';
+import { postService } from '@/entrypoint';
 import { useProviders } from '@/entrypoint/useProviders.hook';
 import { PostStatus } from '@/types';
 import { observer } from 'mobx-react-lite';
+import { NextPage } from 'next';
 import Head from 'next/head';
 import { useState } from 'react';
-import { useEffect } from 'react';
+import { Box } from '@chakra-ui/react';
 
-const Home = ({ posts }: any) => {
-  // const { postService } = useProviders();
+const Home: NextPage = observer(() => {
+  const { postService } = useProviders();
+  // TODO: Perhaps move to service instead of local state
   const [[skip, take], setPagination] = useState<[number, number]>([0, 10]);
 
-  // useEffect(() => {
-  //   postService.getAllPostsWithPagination(skip, take, PostStatus.APPROVED);
-  // }, []);
-
   return (
-    <div>
+    <Box>
       <Head>
         <title>Vanilla React Beta</title>
       </Head>
-      <pre>{JSON.stringify(posts, null, 2)}</pre>
-    </div>
+      <Posts posts={postService.posts} />
+    </Box>
   );
+});
+
+export default Home;
+
+Home.getInitialProps = async (ctx: any) => {
+  // TODO: move props to service
+  await postService.getAllPostsWithPagination(0, 10, PostStatus.PENDING);
+
+  return {};
 };
-
-export default observer(Home);
-
-export async function getServerSideProps() {
-  const posts = await postApi.getAllWithPagination(0, 10, PostStatus.PENDING);
-
-  return {
-    props: {
-      posts,
-    },
-  };
-}

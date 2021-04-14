@@ -1,10 +1,13 @@
-import { Post, PostStatus } from '@/types';
+import { IPost, PostStatus } from '@/types';
 import { action, makeObservable, observable } from 'mobx';
 import { PostApi } from './post.api';
 
 export class PostService {
   @observable
-  posts: Post[];
+  posts: IPost[];
+
+  @observable
+  hasMore: boolean = false;
 
   public constructor(private readonly _postApi: PostApi) {
     makeObservable(this);
@@ -25,7 +28,12 @@ export class PostService {
   }
 
   @action
-  setPosts(newValue: Post[]) {
+  setHasMore(newValue: boolean) {
+    this.hasMore = newValue;
+  }
+
+  @action
+  setPosts(newValue: IPost[]) {
     this.posts = newValue;
   }
 }

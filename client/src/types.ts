@@ -30,7 +30,7 @@ export type AppProviderHooks = {
   [P in Extract<keyof IProvidersContext, `use${string}`>]: IProvidersContext[P];
 };
 
-export interface Post {
+export interface IPost {
   title: string;
   updatedAt: Date;
   createdAt: Date;

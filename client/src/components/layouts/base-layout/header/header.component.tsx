@@ -12,18 +12,24 @@ export const Header = observer(() => {
       as="header"
       justifyContent="space-between"
       alignItems="center"
-      px={[4, 4, 8, 12]}
       py={8}
       bgColor="white"
       borderBottom="1px solid #eee"
     >
-      <Container size="xl" display="flex" alignItems="center">
-        <Flex w="100%" alignItems="center">
+      <Container
+        size="xl"
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+      >
+        <Flex alignItems="center" w="100%">
           <Logo />
           <Searchbar />
         </Flex>
-        <CreateSnippet />
-        <Auth />
+        <Flex alignItems="center">
+          <CreateSnippet />
+          <Auth />
+        </Flex>
       </Container>
     </Flex>
   );
