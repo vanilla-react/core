@@ -14,6 +14,7 @@ export class PostApi extends BaseApi {
       take: String(take),
       status,
     });
+
     const { data } = await this._axios.get(this.endpoint('?') + params);
     return data;
   }

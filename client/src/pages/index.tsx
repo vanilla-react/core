@@ -5,35 +5,42 @@ import { IPost, PostStatus } from '@/types';
 import { observer } from 'mobx-react-lite';
 import { NextPage } from 'next';
 import Head from 'next/head';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Box } from '@chakra-ui/react';
 
-const Home: NextPage<{ posts: IPost[] }> = observer(({ posts }) => {
-  const { postService } = useProviders();
-  const [[skip, take], setPagination] = useState<[number, number]>([0, 10]);
+const Home: NextPage<{ posts: IPost[]; hasMore: boolean }> = observer(
+  ({ posts, hasMore }) => {
+    const { postService } = useProviders();
 
-  useEffect(() => {
-    postService.setPosts(posts);
-  }, []);
+    useEffect(() => {
+      postService.setPosts(posts);
+      postService.setHasMore(hasMore);
+    }, []);
 
-  return (
-    <Box>
-      <Head>
-        <title>Vanilla React Beta</title>
-      </Head>
-      <Posts posts={postService.posts} />
-    </Box>
-  );
-});
+    return (
+      <Box>
+        <Head>
+          <title>Vanilla React Beta</title>
+        </Head>
+        <Posts posts={postService.posts} />
+      </Box>
+    );
+  },
+);
 
 export default Home;
 
 export async function getServerSideProps(ctx: any) {
-  const posts = await postApi.getAllWithPagination(0, 10, PostStatus.APPROVED);
+  const { posts, hasMore } = await postApi.getAllWithPagination(
+    0,
+    10,
+    PostStatus.APPROVED,
+  );
 
   return {
     props: {
       posts,
+      hasMore,
     },
   };
 }
