@@ -10,17 +10,13 @@ export const Posts = ({ posts }: IPostsProps) => {
   return (
     <Flex
       mt={12}
-      direction={{ base: 'column', lg: 'row' }}
+      direction="column"
       border="1px solid #eee"
       style={{ minHeight: `${posts?.length * 129}px` }}
     >
-      {/* <Box bgColor="white" flex="1" borderRight="1px solid #eee">
-        <Box p={12}>
-          <Heading size="sm" fontColor="gray.300">
-            Filters
-          </Heading>
-          <Divider my={2} color="gray.300" />
-          <List mt={6}>
+      <Box bgColor="#fcfcfc" flex="1" borderBottom="1px solid #eee">
+        <Box py={2} ml={6}>
+          <List display="flex">
             <ListItem
               fontWeight="bold"
               color="pink.500"
@@ -37,6 +33,7 @@ export const Posts = ({ posts }: IPostsProps) => {
             <ListItem
               fontSize="1.1rem"
               p={4}
+              ml={4}
               cursor="pointer"
               transition="color ease .2s"
               _hover={{
@@ -47,7 +44,7 @@ export const Posts = ({ posts }: IPostsProps) => {
             </ListItem>
           </List>
         </Box>
-      </Box> */}
+      </Box>
       <Box flex="3">
         {posts
           // @ts-expect-error we cast it to date which we can compare

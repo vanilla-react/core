@@ -8,7 +8,7 @@ export const Post = ({ title, User, createdAt }: IPost) => {
 
   return (
     <Flex
-      bgColor="#FCFCFC"
+      bgColor="white"
       p={8}
       justifyContent="space-between"
       borderBottom="1px solid #eeeeee"
@@ -18,11 +18,15 @@ export const Post = ({ title, User, createdAt }: IPost) => {
           <Avatar name={User.name} />
         </Box>
         <Flex flexDir="column" ml={4}>
-          <Heading fontSize="large">{title}</Heading>
+          <Heading fontSize="lg">{title}</Heading>
           <Text>@{User.name}</Text>
         </Flex>
       </Flex>
-      <Flex justifyContent="center" alignItems="center">
+      <Flex
+        justifyContent="center"
+        alignItems="center"
+        display={{ base: 'none', md: 'flex' }}
+      >
         {createdAtToText}
       </Flex>
     </Flex>

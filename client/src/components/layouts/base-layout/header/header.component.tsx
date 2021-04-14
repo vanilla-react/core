@@ -22,10 +22,10 @@ export const Header = observer(() => {
         alignItems="center"
         justifyContent="space-between"
       >
-        <Flex alignItems="center" w="100%">
+        <Flex alignItems="center">
           <Logo />
-          <Searchbar />
         </Flex>
+        <Searchbar />
         <Flex alignItems="center">
           <CreateSnippet />
           <Auth />
