@@ -34,7 +34,7 @@ export class PostRepository {
    */
 
   public async getAll(skip = 0, take = 10, status?: string) {
-    return this._prismaService.post.findMany({
+    const posts = await this._prismaService.post.findMany({
       skip,
       take,
       where: {
@@ -47,6 +47,15 @@ export class PostRepository {
         ...this.selectWantedFields(),
       },
     });
+
+    const totalPostsCount = await this._prismaService.post.count({
+      skip,
+    });
+
+    return {
+      posts,
+      hasMore: totalPostsCount > 0,
+    };
   }
 
   public async getOneByAuthorNameAndSlug(name: string, slug: string) {
