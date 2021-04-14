@@ -43,7 +43,7 @@ export class PostController {
   findAll(
     @Query('skip', new DefaultValuePipe(undefined)) skip: number,
     @Query('take', new DefaultValuePipe(undefined)) take: number,
-    @Query('status') status: string,
+    @Query('status') status: PostStatus,
   ) {
     return this.postService.getAll(skip, take, status);
   }

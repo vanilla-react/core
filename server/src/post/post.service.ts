@@ -18,7 +18,7 @@ export class PostService {
    * @param {PostStatus} [status] - Fetches posts with this status, defaults to PostStatus.PENDING
    * @return {PrismaPromise<Post>}
    */
-  public async getAll(skip: number, take: number, status: string) {
+  public async getAll(skip: number, take: number, status: PostStatus) {
     return this._postRepo.getAll(skip, take, status);
   }
 

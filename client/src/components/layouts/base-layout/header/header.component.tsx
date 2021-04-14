@@ -1,29 +1,37 @@
 import { Container, Flex } from '@chakra-ui/layout';
-import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { Auth } from './components/auth.component';
 import { Logo } from './components/logo.component';
 import { Searchbar } from './components/searchbar.component';
 import { CreateSnippet } from './components/create-snippet.component';
+import { useProviders } from '@/entrypoint/useProviders.hook';
 
 export const Header = observer(() => {
+  const { authService } = useProviders();
+
   return (
     <Flex
       as="header"
       justifyContent="space-between"
       alignItems="center"
-      px={[4, 4, 8, 12]}
       py={8}
       bgColor="white"
       borderBottom="1px solid #eee"
     >
-      <Container w="100%" maxW="1600px" display="flex" alignItems="center">
-        <Flex w="100%" alignItems="center">
+      <Container
+        size="xl"
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+      >
+        <Flex alignItems="center">
           <Logo />
-          <Searchbar />
         </Flex>
-        <CreateSnippet />
-        <Auth />
+        <Searchbar />
+        <Flex alignItems="center">
+          {authService.isAuthenticated && <CreateSnippet />}
+          <Auth />
+        </Flex>
       </Container>
     </Flex>
   );

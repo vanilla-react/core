@@ -2,6 +2,7 @@
 
 import Axios from 'axios';
 import * as AuthModule from '@features/auth/auth.module';
+import * as PostModule from '@features/posts/post.module';
 import * as SharedModule from '@features/shared/shared.module';
 
 export const useInitialAuth = AuthModule.useInitialAuth;
@@ -13,3 +14,6 @@ export const axios = Axios.create({
 
 export const authApi = new AuthModule.AuthApi(axios);
 export const authService = new AuthModule.AuthService(authApi, config, axios);
+
+export const postApi = new PostModule.PostApi(axios);
+export const postService = new PostModule.PostService(postApi);

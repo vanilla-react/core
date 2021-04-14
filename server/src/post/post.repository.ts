@@ -33,7 +33,7 @@ export class PostRepository {
    * @return {PrismaPromise<Post>}
    */
 
-  public async getAll(skip = 0, take = 10, status?: string) {
+  public async getAll(skip = 0, take = 10, status?: PostStatus) {
     const posts = await this._prismaService.post.findMany({
       skip,
       take,
@@ -49,12 +49,15 @@ export class PostRepository {
     });
 
     const totalPostsCount = await this._prismaService.post.count({
+      where: {
+        ...this.addWithFilter(status),
+      },
       skip,
     });
 
     return {
       posts,
-      hasMore: totalPostsCount > 0,
+      hasMore: totalPostsCount > take,
     };
   }
 
