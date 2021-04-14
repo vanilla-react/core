@@ -19,11 +19,6 @@ export class PostService {
    * @return {PrismaPromise<Post>}
    */
   public async getAll(skip: number, take: number, status: string) {
-    const query: PostQueryDto = {
-      skip,
-      take,
-      status: status === 'APPROVED' || 'PENDING' ? status : undefined,
-    };
     return this._postRepo.getAll(skip, take, status);
   }
 

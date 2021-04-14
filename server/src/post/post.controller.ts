@@ -27,7 +27,6 @@ import { PostStatus } from '../types';
 @Controller('post')
 export class PostController {
   constructor(private readonly postService: PostService) {}
-
   @Post()
   @UseGuards(JwtAuthGuard)
   async create(@User() userId: number, @Body() createPostDto: CreatePostDto) {
