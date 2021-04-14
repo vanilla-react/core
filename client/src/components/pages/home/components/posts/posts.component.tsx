@@ -1,5 +1,5 @@
 import { IPost } from '@/types';
-import { Box, Heading, Flex, List, ListItem, Divider } from '@chakra-ui/react';
+import { Box, Flex, List, ListItem } from '@chakra-ui/react';
 import { Post } from './post.component';
 
 export interface IPostsProps {

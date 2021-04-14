@@ -5,3 +5,25 @@ body {
   min-height: 100vh;
   font-family: 'Karla', sans-serif;
 }
+
+.vote {
+  font-size: 22px;
+  cursor: pointer;
+  transition: 0.2s ease-in-out all;
+}
+
+.vote--inactive {
+  color: #898989;
+}
+
+.vote--inactive:hover {
+  color: #ed64a6;
+}
+
+.vote--active {
+  color: #ed64a6;
+}
+
+.vote--active:hover {
+  opacity: 0.7;
+}
