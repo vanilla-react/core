@@ -8,7 +8,9 @@ export interface IPostMetaDataProps {
 export const PostMetaData = ({ title, username }: IPostMetaDataProps) => {
   return (
     <>
-      <Heading fontSize="lg">{title}</Heading>
+      <Heading fontSize="lg" mb={1}>
+        {title}
+      </Heading>
       <Text>@{username}</Text>
     </>
   );
