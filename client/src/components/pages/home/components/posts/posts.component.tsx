@@ -26,7 +26,9 @@ export const Posts = ({ posts }: IPostsProps) => {
       </Box>
       <Box flex="3">
         {posts.length <= 0 && (
-          <Text>There are no posts yet, be the first!</Text>
+          <Text p={8} bgColor="white">
+            There are no posts yet, be the first!
+          </Text>
         )}
         {sortedPosts.map((post) => (
           <Post {...post} key={post.id} />
