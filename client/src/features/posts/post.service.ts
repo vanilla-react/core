@@ -21,6 +21,7 @@ export class PostService {
   @action
   public async getAllPostsWithPagination(status: PostStatus) {
     if (this.fetching) return;
+
     this.setFetching(true);
     const { posts, hasMore } = await this._postApi.getAllWithPagination(
       this.skip,

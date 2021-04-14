@@ -38,6 +38,7 @@ export const Posts = observer(({ posts }: IPostsProps) => {
   return (
     <Flex
       mt={12}
+      mb={!postService.hasMore ? 12 : 0}
       direction="column"
       border="1px solid #eee"
       style={{ minHeight: `${posts.length * 129}px` }}

@@ -1,6 +1,6 @@
 import { Avatar } from '@/components/layouts/base-layout/header/components/avatar.component';
 import { IPost } from '@/types';
-import { Flex } from '@chakra-ui/react';
+import { Flex, Box } from '@chakra-ui/react';
 import moment from 'moment';
 import { PostVotesComponent } from './post-votes.component';
 import { PostMetaData } from './post-metadata.component';
@@ -18,7 +18,9 @@ export const Post = ({ title, User, createdAt }: IPost) => {
       <Flex alignItems="center">
         <Flex>
           <PostVotesComponent />
-          <Avatar name={User.name} />
+          <Box display={{ base: 'none', md: 'block' }}>
+            <Avatar name={User.name} />
+          </Box>
         </Flex>
         <Flex flexDir="column" ml={4}>
           <PostMetaData title={title} username={User.name} />
