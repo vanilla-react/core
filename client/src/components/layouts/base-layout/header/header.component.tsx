@@ -1,12 +1,14 @@
 import { Container, Flex } from '@chakra-ui/layout';
-import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { Auth } from './components/auth.component';
 import { Logo } from './components/logo.component';
 import { Searchbar } from './components/searchbar.component';
 import { CreateSnippet } from './components/create-snippet.component';
+import { useProviders } from '@/entrypoint/useProviders.hook';
 
 export const Header = observer(() => {
+  const { authService } = useProviders();
+
   return (
     <Flex
       as="header"
@@ -27,7 +29,7 @@ export const Header = observer(() => {
         </Flex>
         <Searchbar />
         <Flex alignItems="center">
-          <CreateSnippet />
+          {authService.isAuthenticated && <CreateSnippet />}
           <Auth />
         </Flex>
       </Container>

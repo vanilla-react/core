@@ -1,17 +1,20 @@
-import { Posts, Spinner } from '@/components';
-import { postService } from '@/entrypoint';
+import { Posts } from '@/components';
+import { postApi } from '@/entrypoint';
 import { useProviders } from '@/entrypoint/useProviders.hook';
-import { PostStatus } from '@/types';
+import { IPost, PostStatus } from '@/types';
 import { observer } from 'mobx-react-lite';
 import { NextPage } from 'next';
 import Head from 'next/head';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Box } from '@chakra-ui/react';
 
-const Home: NextPage = observer(() => {
+const Home: NextPage<{ posts: IPost[] }> = observer(({ posts }) => {
   const { postService } = useProviders();
-  // TODO: Perhaps move to service instead of local state
   const [[skip, take], setPagination] = useState<[number, number]>([0, 10]);
+
+  useEffect(() => {
+    postService.setPosts(posts);
+  }, []);
 
   return (
     <Box>
@@ -25,9 +28,12 @@ const Home: NextPage = observer(() => {
 
 export default Home;
 
-Home.getInitialProps = async (ctx: any) => {
-  // TODO: move props to service
-  await postService.getAllPostsWithPagination(0, 10, PostStatus.PENDING);
+export async function getServerSideProps(ctx: any) {
+  const posts = await postApi.getAllWithPagination(0, 10, PostStatus.APPROVED);
 
-  return {};
-};
+  return {
+    props: {
+      posts,
+    },
+  };
+}

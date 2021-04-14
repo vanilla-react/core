@@ -4,7 +4,7 @@ import { PostApi } from './post.api';
 
 export class PostService {
   @observable
-  posts: IPost[];
+  posts: IPost[] = [];
 
   @observable
   hasMore: boolean = false;
@@ -19,11 +19,7 @@ export class PostService {
     take: number,
     status: PostStatus,
   ) {
-    const posts = await this._postApi.getAllWithPagination(
-      String(skip),
-      String(take),
-      status,
-    );
+    const posts = await this._postApi.getAllWithPagination(skip, take, status);
     this.setPosts(posts);
   }
 

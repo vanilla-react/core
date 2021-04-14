@@ -5,13 +5,13 @@ export class PostApi extends BaseApi {
   prefix = '/post';
 
   public async getAllWithPagination(
-    skip: string,
-    take: string,
+    skip: number,
+    take: number,
     status: PostStatus,
   ) {
     const params = new URLSearchParams({
-      skip,
-      take,
+      skip: String(skip),
+      take: String(take),
       status,
     });
     const { data } = await this._axios.get(this.endpoint('?') + params);
