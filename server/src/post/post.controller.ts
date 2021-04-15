@@ -9,10 +9,9 @@ import {
   UseGuards,
   BadRequestException,
   Query,
-  ParseIntPipe,
-  ValidationPipe,
-  UsePipes,
   DefaultValuePipe,
+  Put,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { PostService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
@@ -21,12 +20,17 @@ import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 import { User } from '../auth/decorators/user.decorator';
 import { PostStatus } from '../types';
+import { KudoService } from '../kudo/kudo.service';
+import { KudoType } from '.prisma/client';
 
 @ApiTags('post')
 @ApiBearerAuth()
 @Controller('post')
 export class PostController {
-  constructor(private readonly postService: PostService) {}
+  constructor(
+    private readonly postService: PostService,
+    private readonly _kudoService: KudoService,
+  ) {}
   @Post()
   @UseGuards(JwtAuthGuard)
   async create(@User() userId: number, @Body() createPostDto: CreatePostDto) {
@@ -61,5 +65,24 @@ export class PostController {
   @Delete(':name/:slug')
   async remove(@Param('name') name: string, @Param('slug') slug: string) {
     return this.postService.removeByAuthorNameAndSlug(name, slug);
+  }
+
+  @Put(':id/kudo/vote')
+  @UseGuards(JwtAuthGuard)
+  async vote(
+    @User() userId: number,
+    @Param('id', new ParseIntPipe()) id: number,
+    @Query('type') type: KudoType,
+  ) {
+    return this._kudoService.vote(id, userId, type);
+  }
+
+  @Delete(':id/kudo/vote')
+  @UseGuards(JwtAuthGuard)
+  async deleteVote(
+    @User() userId: number,
+    @Param('id', new ParseIntPipe()) id: number,
+  ) {
+    return this._kudoService.deleteVote(userId, id);
   }
 }

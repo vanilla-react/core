@@ -1,7 +1,6 @@
 import { PostStatus } from '.prisma/client';
 import { Injectable } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
-import { PostQueryDto } from './dto/post-query-dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { PostRepository } from './post.repository';
 

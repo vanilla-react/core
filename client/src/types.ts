@@ -4,6 +4,8 @@ import {
   AuthService,
   useInitialAuth,
 } from './features/auth/auth.module';
+import { KudoApi } from './features/kudos/kudos.api';
+import { KudoService } from './features/kudos/kudos.service';
 import { PostApi } from './features/posts/post.api';
 import { PostService } from './features/posts/post.service';
 import { ConfigService } from './features/shared/shared.module';
@@ -20,6 +22,8 @@ export interface IProvidersContext {
   useInitialAuth: typeof useInitialAuth;
   postApi: PostApi;
   postService: PostService;
+  kudoApi: KudoApi;
+  kudoService: KudoService;
 }
 
 export type AppProviderWithoutHooks = {
@@ -39,6 +43,7 @@ export interface IPost {
   slug: string;
   User: Author;
   Snippets: any[];
+  Kudos: Kudo[];
 }
 
 export interface Author {
@@ -46,7 +51,17 @@ export interface Author {
   name: string;
 }
 
+export interface Kudo {
+  userId: number;
+  type: KudoType;
+}
+
 export enum PostStatus {
   APPROVED = 'APPROVED',
   PENDING = 'PENDING',
+}
+
+export enum KudoType {
+  UPVOTE = 'UPVOTE',
+  DOWNVOTE = 'DOWNVOTE',
 }

@@ -1,8 +1,7 @@
-/* When adding new hooks or providers you need to update the interface in @/types.ts */
-
 import Axios from 'axios';
 import * as AuthModule from '@features/auth/auth.module';
 import * as PostModule from '@features/posts/post.module';
+import * as KudoModule from '@features/kudos/kudos.module';
 import * as SharedModule from '@features/shared/shared.module';
 
 export const useInitialAuth = AuthModule.useInitialAuth;
@@ -17,3 +16,6 @@ export const authService = new AuthModule.AuthService(authApi, config, axios);
 
 export const postApi = new PostModule.PostApi(axios);
 export const postService = new PostModule.PostService(postApi);
+
+export const kudoApi = new KudoModule.KudoApi(axios);
+export const kudoService = new KudoModule.KudoService(kudoApi, postService);

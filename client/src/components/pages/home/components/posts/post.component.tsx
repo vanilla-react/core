@@ -5,7 +5,7 @@ import moment from 'moment';
 import { PostVotesComponent } from './post-votes.component';
 import { PostMetaData } from './post-metadata.component';
 
-export const Post = ({ title, User, createdAt }: IPost) => {
+export const Post = ({ id, title, User, createdAt, Kudos, ...rest }: IPost) => {
   const createdAtToText = moment(createdAt).fromNow();
 
   return (
@@ -17,7 +17,11 @@ export const Post = ({ title, User, createdAt }: IPost) => {
     >
       <Flex alignItems="center">
         <Flex>
-          <PostVotesComponent />
+          <PostVotesComponent
+            id={id}
+            kudos={Kudos}
+            post={{ id, title, User, createdAt, Kudos, ...rest }}
+          />
           <Box display={{ base: 'none', md: 'block' }}>
             <Avatar name={User.name} />
           </Box>

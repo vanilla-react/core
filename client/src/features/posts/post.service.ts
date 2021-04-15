@@ -1,4 +1,4 @@
-import { IPost, PostStatus } from '@/types';
+import { IPost, KudoType, PostStatus } from '@/types';
 import { action, makeObservable, observable } from 'mobx';
 import { PostApi } from './post.api';
 
@@ -54,6 +54,38 @@ export class PostService {
   @action
   setFetching(newValue: boolean) {
     this.fetching = newValue;
+  }
+
+  @action
+  updatePostKudos(postId: number, userId: number, type: KudoType) {
+    const post = this.posts.find((post) => post.id === postId);
+    if (!post) return;
+
+    const hasVotedOnType = this.hasAlreadyVotedOnType(post, userId, type);
+    if (hasVotedOnType) return;
+
+    const hasVoted = post.Kudos.find((k) => k.userId === userId);
+
+    if (hasVoted) {
+      hasVoted.type = type;
+      return;
+    }
+
+    post.Kudos = [...post.Kudos, { type, userId }];
+  }
+
+  @action
+  deletePostKudo(postId: number, userId: number) {
+    const post = this.posts.find((post) => post.id === postId);
+    if (!post) return;
+
+    post.Kudos = post.Kudos.filter((k) => k.userId !== userId);
+  }
+
+  public hasAlreadyVotedOnType(post: IPost, userId: number, type: KudoType) {
+    return post.Kudos.find(
+      (kudo) => kudo.userId === userId && kudo.type === type,
+    );
   }
 
   private updatePagination() {

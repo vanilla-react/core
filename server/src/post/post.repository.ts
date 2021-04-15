@@ -116,6 +116,12 @@ export class PostRepository {
         id: true,
       },
     },
+    Kudos: {
+      select: {
+        userId: true,
+        type: true,
+      },
+    },
     Snippets: true,
   });
 
