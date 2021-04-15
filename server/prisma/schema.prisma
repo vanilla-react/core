@@ -81,8 +81,9 @@ model Feedback {
 }
 
 model Kudo {
-  Author User @relation(fields: [userId], references: [id])
+  Author User     @relation(fields: [userId], references: [id])
   userId Int
+  type   KudoType
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -95,4 +96,9 @@ model Kudo {
 enum PostStatus {
   PENDING
   APPROVED
+}
+
+enum KudoType {
+  UPVOTE
+  DOWNVOTE
 }

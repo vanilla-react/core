@@ -17,3 +17,5 @@ export enum PostStatus {
   PENDING = 'PENDING',
   APPROVED = 'APPROVED',
 }
+
+export type VoteType = 'upvote' | 'downvote';
