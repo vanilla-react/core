@@ -1,5 +1,5 @@
 import { Posts } from '@/components';
-import { postApi } from '@/entrypoint';
+import { postApi, postService } from '@/entrypoint';
 import { useProviders } from '@/entrypoint/useProviders.hook';
 import { IPost, PostStatus } from '@/types';
 import { observer } from 'mobx-react-lite';
@@ -13,7 +13,7 @@ const Home: NextPage<{ posts: IPost[]; hasMore: boolean }> = observer(
     const { postService } = useProviders();
 
     useEffect(() => {
-      postService.setPosts(posts);
+      postService.setInitialPosts(posts);
       postService.setHasMore(hasMore);
     }, []);
 
@@ -30,7 +30,7 @@ const Home: NextPage<{ posts: IPost[]; hasMore: boolean }> = observer(
 
 export default Home;
 
-export async function getServerSideProps(ctx: any) {
+Home.getInitialProps = async (ctx: any) => {
   const { posts, hasMore } = await postApi.getAllWithPagination(
     0,
     10,
@@ -38,9 +38,7 @@ export async function getServerSideProps(ctx: any) {
   );
 
   return {
-    props: {
-      posts,
-      hasMore,
-    },
+    posts,
+    hasMore,
   };
-}
+};

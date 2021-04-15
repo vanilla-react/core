@@ -41,6 +41,11 @@ export class PostService {
   }
 
   @action
+  setInitialPosts(newValue: IPost[]) {
+    this.posts = newValue;
+  }
+
+  @action
   setPosts(newValue: IPost[]) {
     this.posts = [...this.posts, ...newValue];
   }
