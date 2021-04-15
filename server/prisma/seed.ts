@@ -1,6 +1,9 @@
-import { PrismaClient } from '@prisma/client';
-import faker from 'faker';
-import slugify from 'slugify';
+// import { PrismaClient } from '@prisma/client';
+// import faker from 'faker';
+// import slugify from 'slugify';
+const { PrismaClient } = require('@prisma/client');
+const faker = require('faker');
+const slugify = require('slugify');
 const prisma = new PrismaClient();
 
 export type Post = {
@@ -20,7 +23,6 @@ export enum PostStatus {
 
 export function generateUsers() {
   return [...Array(5)].map((_, index) => ({
-    id: index + 1,
     name: faker.unique(faker.internet.userName),
     email: faker.unique(faker.internet.email),
   }));
@@ -32,7 +34,6 @@ export function generatePosts() {
     const slug = slugify(title);
 
     return {
-      id: index + 1,
       title,
       slug,
       createdAt: faker.date.recent(),
@@ -49,10 +50,10 @@ export function generatePosts() {
 }
 
 export async function seed() {
-  const generatedUsers = generateUsers().map((user) =>
+  const generatedUsers = generateUsers().map((user, idx) =>
     prisma.user.upsert({
       where: {
-        id: user.id,
+        id: idx + 1,
       },
       update: {},
       create: user,
@@ -61,10 +62,10 @@ export async function seed() {
 
   await Promise.all(generatedUsers);
 
-  const generatedPosts = generatePosts().map((post) =>
+  const generatedPosts = generatePosts().map((post, idx) =>
     prisma.post.upsert({
       where: {
-        id: post.id,
+        id: idx + 1,
       },
       update: {},
       create: post,
@@ -79,8 +80,9 @@ export async function seed() {
     },
     create: {
       id: 1,
-      name: 'js',
-      template: "console.log('javascript')",
+      name: 'javascript',
+      template:
+        'ZXhwb3J0IGNvbnN0IEFwcCA9ICgpID0+IHsKICBjb25zdCBoMSA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2gxJykKICBoMS5pbm5lclRleHQgPSAiSGVsbG8gV29ybGQhIgoKICBkb2N1bWVudC5ib2R5LmFwcGVuZChoMSkKfQoKQXBwKCk=',
     },
     update: {},
   });
@@ -92,7 +94,8 @@ export async function seed() {
     create: {
       id: 2,
       name: 'jsx',
-      template: "console.log('react')",
+      template:
+        'ZXhwb3J0IGNvbnN0IEFwcCA9ICgpID0+IHsKICByZXR1cm4gKAogICAgPGgxPgogICAgICBIZWxsbyBXb3JsZCEKICAgIDwvaDE+CiAgKQo=',
     },
     update: {},
   });

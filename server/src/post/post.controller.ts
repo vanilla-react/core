@@ -22,6 +22,7 @@ import { User } from '../auth/decorators/user.decorator';
 import { PostStatus } from '../types';
 import { KudoService } from '../kudo/kudo.service';
 import { KudoType } from '.prisma/client';
+import { ProgrammingLanguageService } from '../programming-language/programming-language.service';
 
 @ApiTags('post')
 @ApiBearerAuth()
@@ -30,6 +31,7 @@ export class PostController {
   constructor(
     private readonly postService: PostService,
     private readonly _kudoService: KudoService,
+    private readonly _programmingLanguageService: ProgrammingLanguageService,
   ) {}
   @Post()
   @UseGuards(JwtAuthGuard)
@@ -84,5 +86,10 @@ export class PostController {
     @Param('id', new ParseIntPipe()) id: number,
   ) {
     return this._kudoService.deleteVote(userId, id);
+  }
+
+  @Get('/programming-languages')
+  async getAllProgrammingLanguages() {
+    return this._programmingLanguageService.getAll();
   }
 }

@@ -2,6 +2,7 @@ import Axios from 'axios';
 import * as AuthModule from '@features/auth/auth.module';
 import * as PostModule from '@features/posts/post.module';
 import * as KudoModule from '@features/kudos/kudos.module';
+import * as PLModule from '@features/programming-languages/programming-languages.module';
 import * as SharedModule from '@features/shared/shared.module';
 
 export const useInitialAuth = AuthModule.useInitialAuth;
@@ -19,3 +20,11 @@ export const postService = new PostModule.PostService(postApi);
 
 export const kudoApi = new KudoModule.KudoApi(axios);
 export const kudoService = new KudoModule.KudoService(kudoApi, postService);
+
+export const programmingLanguageApi = new PLModule.ProgrammingLanguagesApi(
+  axios,
+);
+export const programmingLanguageService = new PLModule.ProgrammingLanguagesService(
+  programmingLanguageApi,
+  SharedModule.Base64Service,
+);

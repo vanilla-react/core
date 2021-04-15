@@ -34,7 +34,7 @@ Home.getInitialProps = async (ctx: any) => {
   const { posts, hasMore } = await postApi.getAllWithPagination(
     0,
     10,
-    PostStatus.APPROVED,
+    PostStatus.PENDING,
   );
 
   return {
