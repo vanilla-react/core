@@ -10,8 +10,7 @@ export class KudoService {
     return this._kudoRepo.vote(postId, userId, type);
   }
 
-  public async deleteVote(postId: number, userId: number) {
-    console.log(postId, userId);
+  public async deleteVote(userId: number, postId: number) {
     return this._kudoRepo.deleteVote(postId, userId);
   }
 }
