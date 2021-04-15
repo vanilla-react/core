@@ -114,13 +114,13 @@ const New = observer(() => {
             onClick={() => setFileName(file.name)}
             disabled={file.name === fileName}
           >
-            Hello
+            {file.name}
           </Button>
         ))}
         <CodeEditor
           height="90vh"
-          theme="vs-dark"
-          path={'app.js'}
+          theme="vs-light"
+          path={file.name}
           defaultLanguage={'javascript'}
           defaultValue={file.value}
           value={file.value}
