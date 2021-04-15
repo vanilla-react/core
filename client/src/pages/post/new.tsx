@@ -92,7 +92,7 @@ const New = observer(() => {
             router.push('/');
           }}
         >
-          Test post submit
+          Submit
         </Button>
       </Flex>
       <HStack h="90vh" w="100%" spacing={8}>
