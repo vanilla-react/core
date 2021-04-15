@@ -1,12 +1,13 @@
 import { Avatar } from '@/components/layouts/base-layout/header/components/avatar.component';
 import { IPost } from '@/types';
 import { Flex, Box } from '@chakra-ui/react';
-import moment from 'moment';
 import { PostVotesComponent } from './post-votes.component';
 import { PostMetaData } from './post-metadata.component';
+import { formatDistance } from 'date-fns';
 
 export const Post = ({ id, title, User, createdAt, Kudos, ...rest }: IPost) => {
-  const createdAtToText = moment(createdAt).fromNow();
+  const createdAtToText =
+    formatDistance(new Date(createdAt), Date.now()) + ' ago';
 
   return (
     <Flex
