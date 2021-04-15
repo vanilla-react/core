@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Button } from '@chakra-ui/button';
 
-export const CreateSnippet = () => {
+export const CreatePost = () => {
   return (
     <Link href="/post/new">
       <Button
@@ -15,7 +15,7 @@ export const CreateSnippet = () => {
           opacity: '.9',
         }}
       >
-        Create Snippet
+        Create Post
       </Button>
     </Link>
   );
