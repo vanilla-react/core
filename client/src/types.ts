@@ -87,4 +87,13 @@ export interface ProgrammingLanguage {
   id: number;
   name: string;
   template: string;
+  extension: string;
 }
+
+export type EditorFiles = Record<string, FileData>;
+
+export type FileData = {
+  name: string;
+  language: string;
+  value: string;
+};

@@ -61,10 +61,11 @@ model Snippet {
 }
 
 model ProgrammingLanguage {
-  id       Int       @id @default(autoincrement())
-  name     String    @unique
-  template String    @unique
-  Snippet  Snippet[]
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  template  String
+  extension String    @unique
+  Snippet   Snippet[]
 }
 
 model Feedback {

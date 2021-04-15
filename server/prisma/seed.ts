@@ -81,6 +81,7 @@ export async function seed() {
     create: {
       id: 1,
       name: 'javascript',
+      extension: '.js',
       template:
         'ZXhwb3J0IGNvbnN0IEFwcCA9ICgpID0+IHsKICBjb25zdCBoMSA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2gxJykKICBoMS5pbm5lclRleHQgPSAiSGVsbG8gV29ybGQhIgoKICBkb2N1bWVudC5ib2R5LmFwcGVuZChoMSkKfQoKQXBwKCk=',
     },
@@ -94,6 +95,7 @@ export async function seed() {
     create: {
       id: 2,
       name: 'jsx',
+      extension: '.jsx',
       template:
         'ZXhwb3J0IGNvbnN0IEFwcCA9ICgpID0+IHsKICByZXR1cm4gKAogICAgPGgxPgogICAgICBIZWxsbyBXb3JsZCEKICAgIDwvaDE+CiAgKQo=',
     },
