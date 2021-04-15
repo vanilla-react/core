@@ -1,6 +1,6 @@
-const { PrismaClient } = require('@prisma/client');
-const faker = require('faker');
-const slugify = require('slugify');
+import { PrismaClient } from '@prisma/client';
+import faker from 'faker';
+import slugify from 'slugify';
 const prisma = new PrismaClient();
 
 export type Post = {
