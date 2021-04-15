@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { Auth } from './components/auth.component';
 import { Logo } from './components/logo.component';
 import { Searchbar } from './components/searchbar.component';
-import { CreateSnippet } from './components/create-snippet.component';
+import { CreatePost } from './components/create-post.component';
 import { useProviders } from '@/entrypoint/useProviders.hook';
 
 export const Header = observer(() => {
@@ -29,7 +29,7 @@ export const Header = observer(() => {
         </Flex>
         <Searchbar />
         <Flex alignItems="center">
-          {authService.isAuthenticated && <CreateSnippet />}
+          {authService.isAuthenticated && <CreatePost />}
           <Auth />
         </Flex>
       </Container>

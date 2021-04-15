@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { SnippetModule } from './snippet/snippet.module';
 import { PostModule } from './post/post.module';
 import { KudoModule } from './kudo/kudo.module';
+import { ProgrammingLanguageModule } from './programming-language/programming-language.module';
 @Module({
   imports: [
     AuthModule,
@@ -14,6 +15,7 @@ import { KudoModule } from './kudo/kudo.module';
     ConfigModule.forRoot(),
     PostModule,
     KudoModule,
+    ProgrammingLanguageModule,
   ],
   providers: [PrismaService],
 })

@@ -1,4 +1,11 @@
-import { IPost, KudoType, PostStatus } from '@/types';
+import {
+  CreatePostDto,
+  IPost,
+  KudoType,
+  PostStatus,
+  Base64 as B64,
+} from '@/types';
+import { Base64 } from 'js-base64';
 import { action, makeObservable, observable } from 'mobx';
 import { PostApi } from './post.api';
 
@@ -16,6 +23,19 @@ export class PostService {
 
   public constructor(private readonly _postApi: PostApi) {
     makeObservable(this);
+  }
+
+  @action
+  public async createPost(createPostDto: CreatePostDto<string>) {
+    const [first, second] = createPostDto.snippets.map((e) => ({
+      ...e,
+      content: Base64.encode(e.content),
+    }));
+    const post: CreatePostDto<B64> = {
+      title: createPostDto.title,
+      snippets: [first, second],
+    };
+    this._postApi.createPost(post);
   }
 
   @action
@@ -38,6 +58,11 @@ export class PostService {
   @action
   setHasMore(newValue: boolean) {
     this.hasMore = newValue;
+  }
+
+  @action
+  setInitialPosts(newValue: IPost[]) {
+    this.posts = newValue;
   }
 
   @action

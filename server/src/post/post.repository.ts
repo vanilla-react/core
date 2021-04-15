@@ -17,6 +17,7 @@ export class PostRepository {
         Snippets: {
           createMany: {
             data: createPostDto.snippets.map((snippet) => ({
+              userId,
               content: snippet.content,
               programmingLanguageId: Number(snippet.programmingLanguageId),
             })),
@@ -41,7 +42,7 @@ export class PostRepository {
         ...this.addWithFilter(status),
       },
       orderBy: {
-        updatedAt: 'asc',
+        updatedAt: 'desc',
       },
       select: {
         ...this.selectWantedFields(),

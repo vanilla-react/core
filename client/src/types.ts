@@ -8,7 +8,9 @@ import { KudoApi } from './features/kudos/kudos.api';
 import { KudoService } from './features/kudos/kudos.service';
 import { PostApi } from './features/posts/post.api';
 import { PostService } from './features/posts/post.service';
-import { ConfigService } from './features/shared/shared.module';
+import { ProgrammingLanguagesApi } from './features/programming-languages/programming-languages.api';
+import { ProgrammingLanguagesService } from './features/programming-languages/programming-languages.service';
+import { Base64Service, ConfigService } from './features/shared/shared.module';
 
 export interface IAvatarProps {
   name: string;
@@ -16,6 +18,7 @@ export interface IAvatarProps {
 
 export interface IProvidersContext {
   config: ConfigService;
+  base64: Base64Service;
   axios: AxiosInstance;
   authApi: AuthApi;
   authService: AuthService;
@@ -24,6 +27,8 @@ export interface IProvidersContext {
   postService: PostService;
   kudoApi: KudoApi;
   kudoService: KudoService;
+  programmingLanguageApi: ProgrammingLanguagesApi;
+  programmingLanguageService: ProgrammingLanguagesService;
 }
 
 export type AppProviderWithoutHooks = {
@@ -42,7 +47,7 @@ export interface IPost {
   id: number;
   slug: string;
   User: Author;
-  Snippets: any[];
+  Snippets: Snippet<Base64>[];
   Kudos: Kudo[];
 }
 
@@ -65,3 +70,30 @@ export enum KudoType {
   UPVOTE = 'UPVOTE',
   DOWNVOTE = 'DOWNVOTE',
 }
+
+export interface CreatePostDto<T = string> {
+  title: string;
+  snippets: Snippet<T>[];
+}
+
+export interface Snippet<T> {
+  content: T;
+  programmingLanguageId: number;
+}
+
+export type Base64 = string;
+
+export interface ProgrammingLanguage {
+  id: number;
+  name: string;
+  template: string;
+  extension: string;
+}
+
+export type EditorFiles = Record<string, FileData>;
+
+export type FileData = {
+  name: string;
+  language: string;
+  value: string;
+};
