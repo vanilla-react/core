@@ -3,11 +3,11 @@ import { IPost } from '@/types';
 import { Flex, Box } from '@chakra-ui/react';
 import { PostVotesComponent } from './post-votes.component';
 import { PostMetaData } from './post-metadata.component';
-import { formatDistance } from 'date-fns';
+import { formatDistanceStrict } from 'date-fns';
 
 export const Post = ({ id, title, User, createdAt, Kudos, ...rest }: IPost) => {
   const createdAtToText =
-    formatDistance(new Date(createdAt), Date.now()) + ' ago';
+    formatDistanceStrict(new Date(createdAt), Date.now()) + ' ago';
 
   return (
     <Flex
