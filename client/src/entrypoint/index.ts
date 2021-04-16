@@ -6,6 +6,7 @@ import * as PLModule from '@features/programming-languages/programming-languages
 import * as SharedModule from '@features/shared/shared.module';
 
 export const useInitialAuth = AuthModule.useInitialAuth;
+export const useTabs = SharedModule.useTabs;
 
 export const config = new SharedModule.ConfigService();
 export const axios = Axios.create({
