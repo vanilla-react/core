@@ -42,7 +42,7 @@ export class PostRepository {
         ...this.addWithFilter(status),
       },
       orderBy: {
-        updatedAt: 'desc',
+        createdAt: 'desc',
       },
       select: {
         ...this.selectWantedFields(),
