@@ -1,13 +1,12 @@
-import { Spinner } from '@/components';
-import { useProviders } from '@/entrypoint/useProviders.hook';
-import { IEditorProps } from '@/types';
-import { Button } from '@chakra-ui/button';
-import { Box, VStack } from '@chakra-ui/layout';
+import React, { useEffect } from 'react';
+import { useState } from 'react';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import dynamic from 'next/dynamic';
-import React, { useEffect } from 'react';
-import { useState } from 'react';
+import { Button, Box, VStack } from '@chakra-ui/react';
+import { Spinner } from '@/components';
+import { useProviders } from '@/entrypoint/useProviders.hook';
+import { IEditorProps } from '@/types';
 
 const CodeEditor = dynamic(
   async () => {

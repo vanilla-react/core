@@ -66,6 +66,7 @@ export const EditorSettings: React.FC<IEditorSettingsProps> = ({
         <FormControl id="title">
           <FormLabel fontWeight="bold">Title</FormLabel>
           <Input
+            required
             h="60px"
             placeholder="Enter Post Title"
             fontWeight="bold"
