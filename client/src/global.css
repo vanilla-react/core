@@ -27,3 +27,8 @@ body {
 .vote--active:hover {
   opacity: 0.7;
 }
+
+/* Used to override editor styles */
+.css-2x38se > *:not(style) ~ *:not(style) {
+  margin: 0 !important;
+}

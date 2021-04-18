@@ -10,7 +10,11 @@ import { PostApi } from './features/posts/post.api';
 import { PostService } from './features/posts/post.service';
 import { ProgrammingLanguagesApi } from './features/programming-languages/programming-languages.api';
 import { ProgrammingLanguagesService } from './features/programming-languages/programming-languages.service';
-import { Base64Service, ConfigService } from './features/shared/shared.module';
+import {
+  Base64Service,
+  ConfigService,
+  useTabs,
+} from './features/shared/shared.module';
 
 export interface IAvatarProps {
   name: string;
@@ -23,6 +27,7 @@ export interface IProvidersContext {
   authApi: AuthApi;
   authService: AuthService;
   useInitialAuth: typeof useInitialAuth;
+  useTabs: typeof useTabs;
   postApi: PostApi;
   postService: PostService;
   kudoApi: KudoApi;
@@ -96,4 +101,14 @@ export type FileData = {
   name: string;
   language: string;
   value: string;
+  languageId: number;
 };
+
+export interface IEditorProps {
+  setSnippetData: React.Dispatch<React.SetStateAction<FileData[]>>;
+  snippetData: FileData[];
+}
+
+export interface IPostDetailsProps {
+  snippetData: FileData[];
+}

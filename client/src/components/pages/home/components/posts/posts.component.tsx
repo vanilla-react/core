@@ -18,7 +18,7 @@ export const Posts = observer(({ posts }: IPostsProps) => {
   const handleInfiniteLoad = debounce(() => {
     if (
       window.innerHeight + window.pageYOffset >=
-      document.body.offsetHeight - 600
+      document.body.offsetHeight - 1600
     ) {
       if (postService.hasMore) {
         postService.getAllPostsWithPagination(PostStatus.APPROVED);

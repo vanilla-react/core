@@ -26,7 +26,7 @@ export class PostService {
   }
 
   @action
-  public async createPost(createPostDto: CreatePostDto<string>) {
+  public async create(createPostDto: CreatePostDto<string>) {
     const [first, second] = createPostDto.snippets.map((e) => ({
       ...e,
       content: Base64.encode(e.content),
@@ -35,7 +35,8 @@ export class PostService {
       title: createPostDto.title,
       snippets: [first, second],
     };
-    this._postApi.createPost(post);
+
+    return this._postApi.create(post);
   }
 
   @action

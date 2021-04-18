@@ -26,6 +26,7 @@ export class ProgrammingLanguagesService {
     }));
     this.setNewProgrammingLanguages(langs);
     this.loading = false;
+    return langs;
   }
 
   @action
