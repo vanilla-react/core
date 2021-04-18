@@ -33,8 +33,8 @@ export default Home;
 Home.getInitialProps = async (ctx: any) => {
   const { posts, hasMore } = await postApi.getAllWithPagination(
     0,
-    10,
-    PostStatus.PENDING,
+    20,
+    PostStatus.APPROVED,
   );
 
   return {
