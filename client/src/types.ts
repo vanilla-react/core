@@ -109,6 +109,6 @@ export interface IEditorProps {
   snippetData: FileData[];
 }
 
-export interface IEditorSettingsProps {
+export interface IPostDetailsProps {
   snippetData: FileData[];
 }

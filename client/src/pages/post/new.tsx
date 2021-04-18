@@ -1,3 +1,4 @@
+import { PostDetails } from '@/components/pages/post/new/post-details/post-details.component';
 import { EditorSettings } from '@/components/pages/post/new/editor-settings/editor-settings.component';
 import { FileData } from '@/types';
 import {
@@ -47,9 +48,11 @@ const New = () => {
               </TabList>
               <TabPanels h="100%">
                 <TabPanel h="100%" p={8}>
-                  <EditorSettings snippetData={snippetData} />
+                  <PostDetails snippetData={snippetData} />
                 </TabPanel>
-                <TabPanel>Nothing here...</TabPanel>
+                <TabPanel h="100%" p={8}>
+                  <EditorSettings />
+                </TabPanel>
               </TabPanels>
             </Tabs>
           </Flex>
