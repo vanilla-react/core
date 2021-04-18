@@ -97,7 +97,7 @@ export async function seed() {
       name: 'jsx',
       extension: '.jsx',
       template:
-        'ZXhwb3J0IGNvbnN0IEFwcCA9ICgpID0+IHsKICByZXR1cm4gKAogICAgPGgxPgogICAgICBIZWxsbyBXb3JsZCEKICAgIDwvaDE+CiAgKQo=',
+        'ZXhwb3J0IGNvbnN0IEFwcCA9ICgpID0+IHsKICByZXR1cm4gKAogICAgPGgxPgogICAgICBIZWxsbyBXb3JsZCEKICAgIDwvaDE+CiAgKQp9=',
     },
     update: {},
   });
