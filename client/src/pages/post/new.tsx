@@ -1,31 +1,20 @@
 import { EditorSettings } from '@/components/pages/post/new/editor-settings/editor-settings.component';
 import { FileData } from '@/types';
 import {
-  Box,
-  Button,
   Flex,
-  FormControl,
-  FormHelperText,
-  FormLabel,
-  Input,
-  Select,
   Tab,
   TabList,
   TabPanel,
   TabPanels,
   Tabs,
-  VStack,
 } from '@chakra-ui/react';
 import { Editor } from '@components/pages/post/new/editor.component';
 import Head from 'next/head';
 import React, { useState } from 'react';
 
 const New = () => {
-  const [title, setTitle] = useState<string>('');
   const [snippetData, setSnippetData] = useState<FileData[]>([]);
 
-  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
-    setTitle(event.target.value);
   return (
     <div>
       <Head>
@@ -58,7 +47,7 @@ const New = () => {
               </TabList>
               <TabPanels h="100%">
                 <TabPanel h="100%" p={8}>
-                  <EditorSettings />
+                  <EditorSettings snippetData={snippetData} />
                 </TabPanel>
                 <TabPanel>Nothing here...</TabPanel>
               </TabPanels>

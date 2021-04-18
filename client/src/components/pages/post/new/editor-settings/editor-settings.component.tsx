@@ -10,6 +10,8 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { IEditorSettingsProps } from '@/types';
+import { useProviders } from '@/entrypoint/useProviders.hook';
+import { useRouter } from 'next/router';
 
 export interface ICreatePostFormProps {
   title: string;
@@ -18,6 +20,8 @@ export interface ICreatePostFormProps {
 export const EditorSettings: React.FC<IEditorSettingsProps> = ({
   snippetData,
 }) => {
+  const router = useRouter();
+  const { postService } = useProviders();
   const [values, setValues] = useState<ICreatePostFormProps>({
     title: '',
   });
@@ -34,11 +38,20 @@ export const EditorSettings: React.FC<IEditorSettingsProps> = ({
   function onSubmit(e: React.FormEvent<HTMLFormElement | HTMLDivElement>) {
     e.preventDefault();
 
-    console.log(values);
-    console.log(snippetData);
-    // Send request with postService
-    // Validation
-    // Redirect to created post
+    postService
+      .create({
+        title: values.title,
+        snippets: snippetData.map(({ languageId, value }) => ({
+          programmingLanguageId: languageId,
+          content: value,
+        })),
+      })
+      .then(() => {
+        // TODO: Push to create posted
+        router.push('/');
+      })
+      // TODO: Handle error
+      .catch(console.error);
   }
 
   return (

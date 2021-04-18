@@ -32,6 +32,7 @@ export const Editor: React.FC<IEditorProps> = observer(
             name: 'app' + lang.extension,
             value: lang.template,
             language: lang.name,
+            languageId: lang.id,
           })),
         );
       });

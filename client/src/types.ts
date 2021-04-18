@@ -101,9 +101,14 @@ export type FileData = {
   name: string;
   language: string;
   value: string;
+  languageId: number;
 };
 
 export interface IEditorProps {
   setSnippetData: React.Dispatch<React.SetStateAction<FileData[]>>;
+  snippetData: FileData[];
+}
+
+export interface IEditorSettingsProps {
   snippetData: FileData[];
 }

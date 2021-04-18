@@ -4,7 +4,7 @@ import { Base64, CreatePostDto, PostStatus } from '@/types';
 export class PostApi extends BaseApi {
   prefix = '/post';
 
-  public async createPost(createPostDto: CreatePostDto<Base64>) {
+  public async create(createPostDto: CreatePostDto<Base64>) {
     const { data } = await this._axios.post(this.endpoint(), createPostDto);
     return data;
   }
