@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import {
   Button,
   Flex,
@@ -8,17 +9,17 @@ import {
   Select,
   VStack,
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import { IEditorSettingsProps } from '@/types';
 
 export interface ICreatePostFormProps {
   title: string;
-  language: string;
 }
 
-export const EditorSettings = () => {
+export const EditorSettings: React.FC<IEditorSettingsProps> = ({
+  snippetData,
+}) => {
   const [values, setValues] = useState<ICreatePostFormProps>({
     title: '',
-    language: '',
   });
 
   function handleChange(
@@ -34,7 +35,7 @@ export const EditorSettings = () => {
     e.preventDefault();
 
     console.log(values);
-    // TOOD: We need the current post data
+    console.log(snippetData);
     // Send request with postService
     // Validation
     // Redirect to created post
@@ -65,29 +66,6 @@ export const EditorSettings = () => {
             }}
           />
           <FormHelperText>Make the title short and powerful</FormHelperText>
-        </FormControl>
-        <FormControl id="title">
-          <FormLabel fontWeight="bold">Language</FormLabel>
-          <Select
-            placeholder="Select Language"
-            h="60px"
-            fontWeight="bold"
-            name="language"
-            onChange={handleChange}
-            border="none"
-            bgColor="#F6F6F6"
-            letterSpacing=".03em"
-            color="gray.400"
-            _placeholder={{
-              color: 'gray.400',
-            }}
-          >
-            <option>JavaScript</option>
-            <option>TypeScript</option>
-          </Select>
-          <FormHelperText>
-            Choose between JavaScript & TypeScript
-          </FormHelperText>
         </FormControl>
         <Flex as="footer" w="100%">
           <Button colorScheme="pink" w="100%" type="submit">
