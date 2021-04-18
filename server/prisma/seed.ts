@@ -29,7 +29,7 @@ export function generateUsers() {
 }
 
 export function generatePosts() {
-  return [...Array(30)].map((_, index) => {
+  return [...Array(60)].map((_, index) => {
     const title = faker.unique(faker.name.title);
     const slug = slugify(title);
 
