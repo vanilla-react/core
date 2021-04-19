@@ -21,7 +21,7 @@ const New = () => {
       <Head>
         <title>Vanilla React Beta - Create new post</title>
       </Head>
-      <Flex mt={6} flexDirection={{ lg: 'column', xl: 'row' }}>
+      <Flex mt={6} flexDirection={{ base: 'column', xl: 'row' }}>
         <Flex as="aside" flex={2} border="1px solid #eee" bgColor="white">
           <Flex as="header" w="100%">
             <Tabs
