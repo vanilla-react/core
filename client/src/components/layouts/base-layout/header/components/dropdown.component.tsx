@@ -6,19 +6,16 @@ import {
   MenuList,
 } from '@chakra-ui/react';
 import { FaHome, FaPlusSquare, FaSignOutAlt } from 'react-icons/fa';
-import { useRouter } from 'next/router';
 import React from 'react';
 import { Avatar } from './avatar.component';
 import { useProviders } from '@entrypoint/useProviders.hook';
 import Link from 'next/link';
 
 export const Dropdown = () => {
-  const router = useRouter();
   const { authService } = useProviders();
 
   function onLogout() {
     authService.logout();
-    router.replace(router.basePath);
   }
 
   return (
