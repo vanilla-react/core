@@ -19,9 +19,11 @@ export const useInitialAuth = (accessToken: string | string[]) => {
     authService.setupInterceptors();
     authService.addAuthorizationHeader(config.accessToken!);
 
-    router.replace({
-      search: '',
-    });
+    if (router.query.accessToken) {
+      router.replace({
+        search: '',
+      });
+    }
 
     authService.getMe().finally(() => setLoading(false));
   }, [accessToken]);
