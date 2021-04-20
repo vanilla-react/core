@@ -8,7 +8,7 @@ import {
   Input,
   VStack,
 } from '@chakra-ui/react';
-import { IPostDetailsProps } from '@/types';
+import { IPost, IPostDetailsProps } from '@/types';
 import { useProviders } from '@/entrypoint/useProviders.hook';
 import { useRouter } from 'next/router';
 
@@ -18,7 +18,7 @@ export interface ICreatePostFormProps {
 
 export const PostDetails: React.FC<IPostDetailsProps> = ({ snippetData }) => {
   const router = useRouter();
-  const { postService } = useProviders();
+  const { postService, authService } = useProviders();
   const [values, setValues] = useState<ICreatePostFormProps>({
     title: '',
   });
@@ -43,9 +43,8 @@ export const PostDetails: React.FC<IPostDetailsProps> = ({ snippetData }) => {
           content: value,
         })),
       })
-      .then(() => {
-        // TODO: Push to create posted
-        router.push('/');
+      .then(({ slug }: Partial<IPost>) => {
+        router.push(`/post/${authService.user!.name}/${slug}`);
       })
       // TODO: Handle error
       .catch(console.error);
