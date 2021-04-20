@@ -1,5 +1,5 @@
 import { BaseApi } from '@/lib';
-import { Base64, CreatePostDto, PostStatus } from '@/types';
+import { Base64, CreatePostDto, IPost, PostStatus } from '@/types';
 
 export class PostApi extends BaseApi {
   prefix = '/post';
@@ -13,7 +13,7 @@ export class PostApi extends BaseApi {
     const { data } = await this._axios.get(
       this.endpoint(`/${username}/${slug}`),
     );
-    return data;
+    return data as IPost;
   }
 
   public async getAllWithPagination(
