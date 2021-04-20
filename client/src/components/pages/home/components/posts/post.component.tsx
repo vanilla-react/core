@@ -19,38 +19,36 @@ export const Post = ({
     formatDistanceStrict(new Date(createdAt), Date.now()) + ' ago';
 
   return (
-    <Link href={`/post/${User.name}/${slug}`}>
-      <a>
-        <Flex
-          bgColor="white"
-          p={8}
-          justifyContent="space-between"
-          borderBottom="1px solid #eeeeee"
-        >
-          <Flex alignItems="center">
-            <Flex>
-              <PostVotesComponent
-                id={id}
-                kudos={Kudos}
-                post={{ id, title, User, createdAt, Kudos, slug, ...rest }}
-              />
-              <Box display={{ base: 'none', md: 'block' }}>
-                <Avatar name={User.name} />
-              </Box>
-            </Flex>
-            <Flex flexDir="column" ml={4}>
-              <PostMetaData title={title} username={User.name} />
-            </Flex>
-          </Flex>
-          <Flex
-            justifyContent="center"
-            alignItems="center"
-            display={{ base: 'none', md: 'flex' }}
-          >
-            {createdAtToText}
-          </Flex>
+    <Flex
+      bgColor="white"
+      p={8}
+      justifyContent="space-between"
+      borderBottom="1px solid #eeeeee"
+    >
+      <Flex alignItems="center">
+        <Flex>
+          <PostVotesComponent
+            id={id}
+            kudos={Kudos}
+            post={{ id, title, User, createdAt, Kudos, slug, ...rest }}
+          />
+          <Box display={{ base: 'none', md: 'block' }}>
+            <Avatar name={User.name} />
+          </Box>
         </Flex>
-      </a>
-    </Link>
+        <Link href={`/post/${User.name}/${slug}`}>
+          <Flex flexDir="column" ml={4} cursor="pointer">
+            <PostMetaData title={title} username={User.name} />
+          </Flex>
+        </Link>
+      </Flex>
+      <Flex
+        justifyContent="center"
+        alignItems="center"
+        display={{ base: 'none', md: 'flex' }}
+      >
+        {createdAtToText}
+      </Flex>
+    </Flex>
   );
 };
