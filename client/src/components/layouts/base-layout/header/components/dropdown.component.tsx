@@ -5,11 +5,12 @@ import {
   MenuItem,
   MenuList,
 } from '@chakra-ui/react';
-import { FaPlusSquare, FaSignOutAlt } from 'react-icons/fa';
+import { FaHome, FaPlusSquare, FaSignOutAlt } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { Avatar } from './avatar.component';
 import { useProviders } from '@entrypoint/useProviders.hook';
+import Link from 'next/link';
 
 export const Dropdown = () => {
   const router = useRouter();
@@ -39,13 +40,19 @@ export const Dropdown = () => {
         }}
       />
       <MenuList border="1px solid #eee">
-        <MenuItem
-          display={{ base: 'flex', md: 'none' }}
-          icon={<FaPlusSquare />}
-          onClick={() => console.log('create post')}
-        >
-          Create Snippet
-        </MenuItem>
+        <Link href="/">
+          <MenuItem display={{ base: 'flex', md: 'none' }} icon={<FaHome />}>
+            Back To Home
+          </MenuItem>
+        </Link>
+        <Link href="/post/new">
+          <MenuItem
+            display={{ base: 'flex', md: 'none' }}
+            icon={<FaPlusSquare />}
+          >
+            Create Snippet
+          </MenuItem>
+        </Link>
         <MenuItem icon={<FaSignOutAlt />} onClick={onLogout}>
           Logout
         </MenuItem>

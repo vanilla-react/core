@@ -32,20 +32,39 @@ export function generatePosts() {
   return [...Array(60)].map((_, index) => {
     const title = faker.unique(faker.name.title);
     const slug = slugify(title);
+    const userId = faker.datatype.number({
+      min: 1,
+      max: 5,
+    });
 
     return {
       title,
       slug,
       createdAt: faker.date.recent(),
       updatedAt: faker.date.recent(),
-      userId: faker.datatype.number({
-        min: 1,
-        max: 5,
-      }),
+      userId,
       status: faker.datatype.number({ min: 0, max: 1 })
         ? PostStatus.PENDING
         : PostStatus.APPROVED,
-    } as Post;
+      Snippets: {
+        createMany: {
+          data: [
+            {
+              userId,
+              content:
+                'ZXhwb3J0IGNvbnN0IEFwcCA9ICgpID0+IHsKICBjb25zdCBoMSA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2gxJykKICBoMS5pbm5lclRleHQgPSAiSGVsbG8gV29ybGQhIgoKICBkb2N1bWVudC5ib2R5LmFwcGVuZChoMSkKfQoKQXBwKCk=',
+              programmingLanguageId: 1,
+            },
+            {
+              userId,
+              content:
+                'ZXhwb3J0IGNvbnN0IEFwcCA9ICgpID0+IHsKICByZXR1cm4gKAogICAgPGgxPgogICAgICBIZWxsbyBXb3JsZCEKICAgIDwvaDE+CiAgKQp9=',
+              programmingLanguageId: 2,
+            },
+          ],
+        },
+      },
+    };
   });
 }
 
@@ -61,18 +80,6 @@ export async function seed() {
   );
 
   await Promise.all(generatedUsers);
-
-  const generatedPosts = generatePosts().map((post, idx) =>
-    prisma.post.upsert({
-      where: {
-        id: idx + 1,
-      },
-      update: {},
-      create: post,
-    }),
-  );
-
-  await Promise.all(generatedPosts);
 
   await prisma.programmingLanguage.upsert({
     where: {
@@ -101,6 +108,18 @@ export async function seed() {
     },
     update: {},
   });
+
+  const generatedPosts = generatePosts().map((post, idx) =>
+    prisma.post.upsert({
+      where: {
+        id: idx + 1,
+      },
+      update: {},
+      create: post,
+    }),
+  );
+
+  await Promise.all(generatedPosts);
 }
 
 seed()

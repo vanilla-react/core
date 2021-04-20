@@ -32,3 +32,8 @@ body {
 .css-2x38se > *:not(style) ~ *:not(style) {
   margin: 0 !important;
 }
+
+.code-snippet {
+  font-family: 'Fira Code';
+  width: 100%;
+}

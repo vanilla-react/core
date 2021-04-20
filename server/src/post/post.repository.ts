@@ -123,7 +123,18 @@ export class PostRepository {
         type: true,
       },
     },
-    Snippets: true,
+    Snippets: {
+      select: {
+        content: true,
+        ProgrammingLanguage: {
+          select: {
+            extension: true,
+            id: true,
+            template: true,
+          },
+        },
+      },
+    },
   });
 
   private addWithRelation = (id: number, relation = 'User'): any => ({

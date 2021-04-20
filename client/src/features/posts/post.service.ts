@@ -7,6 +7,7 @@ import {
 } from '@/types';
 import { Base64 } from 'js-base64';
 import { action, makeObservable, observable } from 'mobx';
+import { Base64Service } from '../shared/base64.service';
 import { PostApi } from './post.api';
 
 export class PostService {
@@ -21,7 +22,10 @@ export class PostService {
 
   fetching: boolean = false;
 
-  public constructor(private readonly _postApi: PostApi) {
+  public constructor(
+    private readonly _postApi: PostApi,
+    private readonly _base64Service: typeof Base64Service,
+  ) {
     makeObservable(this);
   }
 
@@ -112,6 +116,17 @@ export class PostService {
     return post.Kudos.find(
       (kudo) => kudo.userId === userId && kudo.type === type,
     );
+  }
+
+  public async getByUsernameAndSlug(username: string, slug: string) {
+    const post = await this._postApi.getByUsernameAndSlug(username, slug);
+    return {
+      ...post,
+      Snippets: post.Snippets.map((snippet) => ({
+        ...snippet,
+        content: this._base64Service.ToReadable(snippet.content),
+      })),
+    } as IPost;
   }
 
   private updatePagination() {

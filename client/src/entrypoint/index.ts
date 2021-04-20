@@ -17,7 +17,10 @@ export const authApi = new AuthModule.AuthApi(axios);
 export const authService = new AuthModule.AuthService(authApi, config, axios);
 
 export const postApi = new PostModule.PostApi(axios);
-export const postService = new PostModule.PostService(postApi);
+export const postService = new PostModule.PostService(
+  postApi,
+  SharedModule.Base64Service,
+);
 
 export const kudoApi = new KudoModule.KudoApi(axios);
 export const kudoService = new KudoModule.KudoService(kudoApi, postService);
