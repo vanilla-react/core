@@ -23,6 +23,12 @@ export class PostRepository {
             })),
           },
         },
+        Kudos: {
+          create: {
+            userId,
+            type: 'UPVOTE'
+          }
+        },
       },
     });
   }
