@@ -114,6 +114,10 @@ export class PostService {
     );
   }
 
+  public async getByUsernameAndSlug(username: string, slug: string) {
+    return this._postApi.getByUsernameAndSlug(username, slug);
+  }
+
   private updatePagination() {
     if (this.hasMore) {
       this.skip += this.take;

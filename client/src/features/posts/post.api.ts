@@ -9,6 +9,13 @@ export class PostApi extends BaseApi {
     return data;
   }
 
+  public async getByUsernameAndSlug(username: string, slug: string) {
+    const { data } = await this._axios.get(
+      this.endpoint(`/${username}/${slug}`),
+    );
+    return data;
+  }
+
   public async getAllWithPagination(
     skip: number,
     take: number,
